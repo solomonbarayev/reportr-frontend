@@ -9,7 +9,7 @@ const EmployeeListItem = ({ employee }: Props) => {
   return (
     <li>
       <div className="employee-list-item">
-        <p>{employee.name}</p>
+        <p>{`${employee.firstName} ${employee.lastName}`}</p>
         <p>{employee.position}</p>
         <Link to={`/employee/${employee._id}`}>
           <button>View</button>

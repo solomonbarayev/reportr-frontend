@@ -2,7 +2,8 @@ export interface IRegisterData {
   email: string;
   password: string;
   picture: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   position: string;
   isManager: boolean;
   mySubordinates: string[];

@@ -18,11 +18,14 @@ const EmployeeOption = ({
       <input
         type="checkbox"
         id={employee._id}
-        name={employee.name}
+        name={employee._id}
         onChange={handleEmployeeCheckboxes}
         checked={checkIfEmployeeChecked(employee._id)}
       />
-      <label htmlFor={employee._id}>{employee.name}</label>
+      <label
+        htmlFor={
+          employee._id
+        }>{`${employee.firstName} ${employee.lastName}`}</label>
     </li>
   );
 };

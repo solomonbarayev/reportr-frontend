@@ -3,7 +3,6 @@ import './EmployeeSinglePage.css';
 import { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
-import { useEmployees } from '../../contexts/EmployeesContext';
 import { IEmployee } from '../../model/EmployeeData';
 import api from '../../utils/api';
 import { ITask } from '../../model/TaskData';
@@ -12,24 +11,21 @@ const EmployeeSinglePage = () => {
   //param
   const { id } = useParams<{ id: string }>();
 
-  const { employees } = useEmployees();
   //state
   const [employee, setEmployee] = useState<IEmployee | undefined>(
     {} as IEmployee
   );
   const [tasks, setTasks] = useState<ITask[]>([]);
-
-  // get id from params
+  const [manager, setManager] = useState<IEmployee | undefined>(
+    {} as IEmployee
+  );
 
   useEffect(() => {
     //api call to find specific employee
     api
       .getEmployee(localStorage.getItem('jwt'), id)
       .then((res: IEmployee) => {
-        if (res) {
-          setEmployee(res);
-          console.log('employee', res);
-        }
+        res && setEmployee(res);
       })
       .catch((err) => {
         console.log(err);
@@ -41,9 +37,19 @@ const EmployeeSinglePage = () => {
     api
       .getEmployeeTasks(localStorage.getItem('jwt'), id)
       .then((res: ITask[]) => {
-        if (res) {
-          setTasks(res);
-        }
+        res && setTasks(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    //api call to fetch employee manager if any
+    api
+      .getManager(localStorage.getItem('jwt'), id)
+      .then((res: IEmployee) => {
+        res && setManager(res);
       })
       .catch((err) => {
         console.log(err);
@@ -56,9 +62,9 @@ const EmployeeSinglePage = () => {
       <div className="info">
         <img src={employee?.picture} alt="employee" />
         <div className="info__text">
-          <p>Name: {employee?.name}</p>
+          <p>Name: {`${employee?.firstName} ${employee?.lastName}`}</p>
           <p>Position: {employee?.position}</p>
-          <p>Manager: {employee?.managerId}</p>
+          <p>Manager: {`${manager?.firstName} ${manager?.lastName}`} </p>
         </div>
       </div>
       <div className="tasks">

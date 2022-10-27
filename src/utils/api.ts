@@ -19,17 +19,6 @@ export class Api {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.statusText}`);
   }
 
-  // getAllEmployees = (token: string | null) => {
-  //   return fetch(`${this.BASE_URL}/employees`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   }).then(this._checkResponse);
-  // };
-
   getAllEmployees = () => {
     return fetch(`${this.BASE_URL}/employees`, {
       method: 'GET',
@@ -43,6 +32,17 @@ export class Api {
   //get single employee by request params id (employeeID)
   getEmployee = (token: string | null, employeeID: string) => {
     return fetch(`${this.BASE_URL}/employees/${employeeID}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(this._checkResponse);
+  };
+
+  getManager = (token: string | null, employeeID: string) => {
+    return fetch(`${this.BASE_URL}/employees/${employeeID}/manager`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

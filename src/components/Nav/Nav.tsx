@@ -4,10 +4,13 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 interface Props {
   handleSignOut: () => void;
   isLoggedIn: boolean;
+  isManager: boolean;
+  email: string;
 }
 
-const Nav = ({ isLoggedIn, handleSignOut }: Props) => {
+const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: Props) => {
   const location = useLocation();
+
   return (
     <nav className="nav">
       <ul>
@@ -27,14 +30,16 @@ const Nav = ({ isLoggedIn, handleSignOut }: Props) => {
             My Tasks
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/myreports"
-            className="nav_link"
-            activeClassName="nav_link_active">
-            My Reports
-          </NavLink>
-        </li>
+        {isManager && (
+          <li>
+            <NavLink
+              to="/myreports"
+              className="nav_link"
+              activeClassName="nav_link_active">
+              My Reports
+            </NavLink>
+          </li>
+        )}
         {isLoggedIn ? (
           <li>
             <Link to="/" onClick={handleSignOut}>

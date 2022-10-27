@@ -2,7 +2,6 @@ import './SignUp.css';
 
 import React, { useState } from 'react';
 import { IRegisterData } from '../../utils/auth';
-import { useEmployees } from '../../contexts/EmployeesContext';
 import EmployeeCheckboxes from '../EmployeeCheckboxes/EmployeeCheckboxes';
 
 interface Props {
@@ -11,12 +10,12 @@ interface Props {
 
 const SignUp = ({ handleSignUp }: Props) => {
   const [userData, setUserData] = useState<IRegisterData>({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     position: '',
     picture: '',
-    manager: '',
     isManager: false,
     mySubordinates: [],
   } as IRegisterData);
@@ -51,8 +50,7 @@ const SignUp = ({ handleSignUp }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // handleSignUp(userData);
-    console.log(userData.mySubordinates);
+    handleSignUp(userData);
   };
 
   return (
@@ -75,13 +73,21 @@ const SignUp = ({ handleSignUp }: Props) => {
           onChange={handleChange}
           value={userData.password}
         />
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">First Name</label>
         <input
           type="text"
-          name="name"
-          id="name"
+          name="firstName"
+          id="firstName"
           onChange={handleChange}
-          value={userData.name}
+          value={userData.firstName}
+        />
+        <label htmlFor="name">Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          id="lastName"
+          onChange={handleChange}
+          value={userData.lastName}
         />
         <label htmlFor="picture">Picture</label>
         <input

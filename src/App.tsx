@@ -19,9 +19,7 @@ import { useEmployees } from './contexts/EmployeesContext';
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [token, setToken] = useState(localStorage.getItem('jwt'));
-  const [userData, setUserData] = useState({
-    email: '',
-  });
+  const [userData, setUserData] = useState<IEmployee>({} as IEmployee);
   // const [employees, setEmployees] = useState<IEmployee[]>([]);
 
   const { setEmployees, setLoggedIn } = useEmployees();
@@ -102,7 +100,12 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Reportr</h1>
-      <Nav handleSignOut={handleSignOut} isLoggedIn={isLoggedIn} />
+      <Nav
+        handleSignOut={handleSignOut}
+        isLoggedIn={isLoggedIn}
+        isManager={userData.isManager}
+        email={userData.email}
+      />
       <Switch>
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/" exact>
           <EmployeeList />
