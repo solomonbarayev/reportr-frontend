@@ -3,18 +3,28 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import EmployeeList from './components/EmployeeList/EmployeeList';
 import EmployeeSinglePage from './components/EmployeeSinglePage/EmployeeSinglePage';
+import Nav from './components/Nav/Nav';
 
 import auth, { IRegisterData } from './utils/auth';
+import api from './utils/api';
 import { IAuth } from './utils/auth';
+import { useAuth } from './contexts/AuthContext';
 
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import { IEmployee } from './model/EmployeeData';
+import { useEmployees } from './contexts/EmployeesContext';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [token, setToken] = useState(localStorage.getItem('jwt'));
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    email: '',
+  });
+  // const [employees, setEmployees] = useState<IEmployee[]>([]);
+
+  const { setEmployees } = useEmployees();
 
   const history = useHistory();
 
@@ -24,11 +34,12 @@ const App: React.FC = () => {
     if (token) {
       userAuth
         .checkToken(token)
-        .then((res: Object) => {
+        .then((res: IEmployee) => {
           if (res) {
             setIsLoggedIn(true);
             setUserData(res);
             history.push('/');
+            console.log(userData);
           }
         })
         .catch((err: any) => {
@@ -36,7 +47,22 @@ const App: React.FC = () => {
           history.push('/signin');
         });
     }
-  }, [token, history]);
+  }, []);
+
+  //fetch employees from api when logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      api
+        .getAllEmployees(token)
+        .then((res: IEmployee[]) => {
+          setEmployees(res);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn, token]);
 
   const handleSignIn = (email: string, password: string) => {
     userAuth
@@ -59,7 +85,7 @@ const App: React.FC = () => {
       .register(data)
       .then((res: any) => {
         if (res) {
-          console.log(res);
+          history.push('/signin');
         }
       })
       .catch((err: any) => {
@@ -67,9 +93,17 @@ const App: React.FC = () => {
       });
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt');
+    setToken('');
+    setIsLoggedIn(false);
+    history.push('/signin');
+  };
+
   return (
     <div className="App">
       <h1>Reportr</h1>
+      <Nav handleSignOut={handleSignOut} isLoggedIn={isLoggedIn} />
       <Switch>
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/" exact>
           <EmployeeList />

@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { employeeData } from '../../model/employeeType';
+import { IEmployee } from '../../model/EmployeeData';
 
 interface Props {
-  employee: employeeData;
+  employee: IEmployee;
 }
 
 const EmployeeListItem = ({ employee }: Props) => {
@@ -12,7 +11,7 @@ const EmployeeListItem = ({ employee }: Props) => {
       <div className="employee-list-item">
         <p>{employee.name}</p>
         <p>{employee.position}</p>
-        <Link to={`/employee/${employee.id}`}>
+        <Link to={`/employee/${employee._id}`}>
           <button>View</button>
         </Link>
       </div>
