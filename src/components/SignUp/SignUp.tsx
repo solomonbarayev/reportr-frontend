@@ -1,18 +1,13 @@
 import './SignUp.css';
 
 import React, { useState } from 'react';
+import { IRegisterData } from '../../utils/auth';
 
 interface Props {
-  handleSignUp: (
-    email: string,
-    password: string,
-    name: string,
-    picture: string,
-    position: string
-  ) => void;
+  handleSignUp: (data: IRegisterData) => void;
 }
 
-const SignUp = () => {
+const SignUp = ({ handleSignUp }: Props) => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',
@@ -25,17 +20,15 @@ const SignUp = () => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   handleSignUp(
-  //     ...userData
-  //   );
-  // };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSignUp(userData);
+  };
 
   return (
     <section className="signup">
       <h2>Sign Up</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
           type="email"

@@ -4,7 +4,7 @@ import './App.css';
 import EmployeeList from './components/EmployeeList/EmployeeList';
 import EmployeeSinglePage from './components/EmployeeSinglePage/EmployeeSinglePage';
 
-import auth from './utils/auth';
+import auth, { IRegisterData } from './utils/auth';
 import { IAuth } from './utils/auth';
 
 import SignIn from './components/SignIn/SignIn';
@@ -54,15 +54,9 @@ const App: React.FC = () => {
       });
   };
 
-  const handleSignUp = (
-    email: string,
-    password: string,
-    name: string,
-    picture: string,
-    position: string
-  ) => {
+  const handleSignUp = (data: IRegisterData) => {
     userAuth
-      .register(email, password, name, picture, position)
+      .register(data)
       .then((res: any) => {
         if (res) {
           console.log(res);
@@ -90,7 +84,7 @@ const App: React.FC = () => {
         </Route>
 
         <Route path="/signup">
-          <SignUp />
+          <SignUp handleSignUp={handleSignUp} />
         </Route>
 
         {/* route for non existent to redirect home */}
