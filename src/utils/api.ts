@@ -19,13 +19,23 @@ export class Api {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.statusText}`);
   }
 
-  getAllEmployees = (token: string | null) => {
+  // getAllEmployees = (token: string | null) => {
+  //   return fetch(`${this.BASE_URL}/employees`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   }).then(this._checkResponse);
+  // };
+
+  getAllEmployees = () => {
     return fetch(`${this.BASE_URL}/employees`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
       },
     }).then(this._checkResponse);
   };

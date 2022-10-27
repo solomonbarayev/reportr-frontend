@@ -53,7 +53,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isLoggedIn) {
       api
-        .getAllEmployees(token)
+        .getAllEmployees()
         .then((res: IEmployee[]) => {
           setEmployees(res);
         })

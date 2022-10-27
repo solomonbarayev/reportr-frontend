@@ -22,13 +22,10 @@ export const EmployeesProvider = ({
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!loggedIn) {
-      return;
-    }
-    api.getAllEmployees(token).then((res) => {
+    api.getAllEmployees().then((res) => {
       setEmployees(res);
     });
-  }, [loggedIn]);
+  }, []);
 
   return (
     <EmployeesContext.Provider

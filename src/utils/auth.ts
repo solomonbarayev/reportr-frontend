@@ -4,7 +4,10 @@ export interface IRegisterData {
   picture: string;
   name: string;
   position: string;
+  isManager: boolean;
+  mySubordinates: string[];
 }
+
 export interface IAuth {
   BASE_URL: string;
   _customFetch(url: string, headers: RequestInit): Promise<any>;

@@ -1,9 +1,8 @@
 import './EmployeeSinglePage.css';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
-import data from '../../data/data';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { IEmployee } from '../../model/EmployeeData';
 import api from '../../utils/api';
@@ -29,6 +28,7 @@ const EmployeeSinglePage = () => {
       .then((res: IEmployee) => {
         if (res) {
           setEmployee(res);
+          console.log('employee', res);
         }
       })
       .catch((err) => {
@@ -43,8 +43,6 @@ const EmployeeSinglePage = () => {
       .then((res: ITask[]) => {
         if (res) {
           setTasks(res);
-          console.log('res', res);
-          console.log('tasks', tasks);
         }
       })
       .catch((err) => {
@@ -66,7 +64,7 @@ const EmployeeSinglePage = () => {
       <div className="tasks">
         <h2>Tasks</h2>
         <ul>
-          {employee?.myTasks?.map((task) => (
+          {tasks.map((task) => (
             <li key={task._id}>
               <p>{task.title}</p>
               <p>{task.dueDate}</p>

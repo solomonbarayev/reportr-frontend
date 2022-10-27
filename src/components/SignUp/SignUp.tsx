@@ -2,27 +2,57 @@ import './SignUp.css';
 
 import React, { useState } from 'react';
 import { IRegisterData } from '../../utils/auth';
+import { useEmployees } from '../../contexts/EmployeesContext';
+import EmployeeCheckboxes from '../EmployeeCheckboxes/EmployeeCheckboxes';
 
 interface Props {
   handleSignUp: (data: IRegisterData) => void;
 }
 
 const SignUp = ({ handleSignUp }: Props) => {
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<IRegisterData>({
+    name: '',
     email: '',
     password: '',
-    name: '',
-    picture: '',
     position: '',
-  });
+    picture: '',
+    manager: '',
+    isManager: false,
+    mySubordinates: [],
+  } as IRegisterData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData({ ...userData, isManager: e.target.checked });
+  };
+
+  const handleEmployeeCheckboxes = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setUserData({
+        ...userData,
+        mySubordinates: [...userData.mySubordinates, e.target.id],
+      });
+    } else {
+      setUserData({
+        ...userData,
+        mySubordinates: userData.mySubordinates.filter(
+          (id) => id !== e.target.id
+        ),
+      });
+    }
+  };
+
+  const checkIfEmployeeChecked = (id: string) => {
+    return userData.mySubordinates?.includes(id);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSignUp(userData);
+    // handleSignUp(userData);
+    console.log(userData.mySubordinates);
   };
 
   return (
@@ -69,6 +99,25 @@ const SignUp = ({ handleSignUp }: Props) => {
           onChange={handleChange}
           value={userData.position}
         />
+        <label htmlFor="isManager">Are you a manager?</label>
+        <input
+          type="checkbox"
+          name="isManager"
+          id="isManager"
+          onChange={handleCheckBoxChange}
+          checked={userData.isManager}
+        />
+
+        {userData.isManager && (
+          <div className="signup__subordinates">
+            <label htmlFor="subordinates">Who are you're employees?</label>
+            <EmployeeCheckboxes
+              handleEmployeeCheckboxes={handleEmployeeCheckboxes}
+              checkIfEmployeeChecked={checkIfEmployeeChecked}
+            />
+          </div>
+        )}
+
         <button type="submit">Sign Up</button>
       </form>
     </section>
