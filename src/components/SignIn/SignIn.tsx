@@ -1,6 +1,7 @@
 import './SignIn.css';
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Props {
   handleSignIn: (email: string, password: string) => void;
@@ -40,6 +41,8 @@ const SignIn = ({ handleSignIn }: Props) => {
         />
         <button type="submit">Sign In</button>
       </form>
+      {/* or sign in  */}
+      <Link to="/signup">Or Register</Link>
     </section>
   );
 };

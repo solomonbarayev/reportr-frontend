@@ -1,9 +1,14 @@
-//create interface for Auth
 export interface IAuth {
   BASE_URL: string;
   _customFetch(url: string, headers: RequestInit): Promise<any>;
   login(email: string, password: string): Promise<any>;
-  register(email: string, password: string): Promise<any>;
+  register(
+    email: string,
+    password: string,
+    picture: string,
+    name: string,
+    position: string
+  ): Promise<any>;
   checkToken(token: string): Promise<any>;
 }
 
@@ -20,14 +25,20 @@ export default class Auth implements IAuth {
     );
   }
 
-  register(email: string, password: string) {
+  register(
+    email: string,
+    password: string,
+    name: string,
+    position: string,
+    picture: string
+  ) {
     return this._customFetch(`${this.BASE_URL}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, name, position, picture }),
     });
   }
 

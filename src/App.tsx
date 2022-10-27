@@ -54,6 +54,25 @@ const App: React.FC = () => {
       });
   };
 
+  const handleSignUp = (
+    email: string,
+    password: string,
+    name: string,
+    picture: string,
+    position: string
+  ) => {
+    userAuth
+      .register(email, password, name, picture, position)
+      .then((res: any) => {
+        if (res) {
+          console.log(res);
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="App">
       <h1>Reportr</h1>
