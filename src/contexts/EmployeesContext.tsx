@@ -1,27 +1,38 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { IEmployee } from '../model/EmployeeData';
 import api from '../utils/api';
 
 interface IContextState {
   employees: IEmployee[];
   setEmployees: React.Dispatch<React.SetStateAction<IEmployee[]>>;
+  loggedIn: boolean;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmployeesContext = createContext({} as IContextState);
 
 const token = localStorage.getItem('jwt');
 
-export const EmployeesProvider = ({ children }: any) => {
+export const EmployeesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [employees, setEmployees] = useState<IEmployee[]>([]);
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!loggedIn) {
+      return;
+    }
     api.getAllEmployees(token).then((res) => {
       setEmployees(res);
     });
-  }, []);
+  }, [loggedIn]);
 
   return (
-    <EmployeesContext.Provider value={{ employees, setEmployees }}>
+    <EmployeesContext.Provider
+      value={{ employees, setEmployees, loggedIn, setLoggedIn }}>
       {children}
     </EmployeesContext.Provider>
   );

@@ -24,7 +24,7 @@ const App: React.FC = () => {
   });
   // const [employees, setEmployees] = useState<IEmployee[]>([]);
 
-  const { setEmployees } = useEmployees();
+  const { setEmployees, setLoggedIn } = useEmployees();
 
   const history = useHistory();
 
@@ -37,9 +37,9 @@ const App: React.FC = () => {
         .then((res: IEmployee) => {
           if (res) {
             setIsLoggedIn(true);
+            setLoggedIn(true); // temporary solution until you figure out Auth context!!!!!
             setUserData(res);
             history.push('/');
-            console.log(userData);
           }
         })
         .catch((err: any) => {
@@ -56,7 +56,6 @@ const App: React.FC = () => {
         .getAllEmployees(token)
         .then((res: IEmployee[]) => {
           setEmployees(res);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);

@@ -4,47 +4,84 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 import data from '../../data/data';
+import { useEmployees } from '../../contexts/EmployeesContext';
+import { IEmployee } from '../../model/EmployeeData';
+import api from '../../utils/api';
+import { ITask } from '../../model/TaskData';
 
 const EmployeeSinglePage = () => {
   //param
   const { id } = useParams<{ id: string }>();
 
-  let employee = data[Math.floor(Math.random() * data.length)];
+  const { employees } = useEmployees();
+  //state
+  const [employee, setEmployee] = useState<IEmployee | undefined>(
+    {} as IEmployee
+  );
+  const [tasks, setTasks] = useState<ITask[]>([]);
 
-  console.log(employee);
+  // get id from params
+
+  useEffect(() => {
+    //api call to find specific employee
+    api
+      .getEmployee(localStorage.getItem('jwt'), id)
+      .then((res: IEmployee) => {
+        if (res) {
+          setEmployee(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    //api call to fetch employee tasks if any
+    api
+      .getEmployeeTasks(localStorage.getItem('jwt'), id)
+      .then((res: ITask[]) => {
+        if (res) {
+          setTasks(res);
+          console.log('res', res);
+          console.log('tasks', tasks);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   return (
     <div>
       <h1>Employee Info Page</h1>
       <div className="info">
-        <img src={employee.picture} alt="employee" />
+        <img src={employee?.picture} alt="employee" />
         <div className="info__text">
-          <p>Name: {employee.name}</p>
-          <p>Position: {employee.position}</p>
-          <p>Manager: {employee.managerId}</p>
+          <p>Name: {employee?.name}</p>
+          <p>Position: {employee?.position}</p>
+          <p>Manager: {employee?.managerId}</p>
         </div>
       </div>
       <div className="tasks">
         <h2>Tasks</h2>
         <ul>
-          {employee.myTasks?.map(
-            (task: { id: number; text: string; dueDate: string }) => (
-              <li key={task.id}>
-                <p>{task.text}</p>
-                <p>Due Date: {task.dueDate}</p>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
-      <div className="subordinates">
-        <h2>Subordinates</h2>
-        <ul>
-          {employee.mySubordinates?.map((subordinate: number) => (
-            <li key={subordinate}>{subordinate}</li>
+          {employee?.myTasks?.map((task) => (
+            <li key={task._id}>
+              <p>{task.title}</p>
+              <p>{task.dueDate}</p>
+            </li>
           ))}
         </ul>
       </div>
+      {/* <div className="subordinates">
+        <h2>Subordinates</h2>
+        <ul>
+          {employee?.mySubordinates?.map((subordinate: number) => (
+            <li key={subordinate}>{subordinate}</li>
+          ))}
+        </ul>
+      </div> */}
     </div>
   );
 };
