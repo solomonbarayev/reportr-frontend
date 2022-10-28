@@ -9,13 +9,14 @@ import TasksPage from './components/TasksPage/TasksPage';
 import auth, { IRegisterData } from './utils/auth';
 import api from './utils/api';
 import { IAuth } from './utils/auth';
-import { useAuth } from './contexts/AuthContext';
+// import { useAuth } from './contexts/AuthContext';
 
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { IEmployee } from './model/EmployeeData';
 import { useEmployees } from './contexts/EmployeesContext';
+import ReportPage from './components/ReportPage/ReportPage';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -120,6 +121,10 @@ const App: React.FC = () => {
 
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/mytasks">
           <TasksPage />
+        </ProtectedRoute>
+
+        <ProtectedRoute isLoggedIn={isLoggedIn} path="/myreports">
+          <ReportPage />
         </ProtectedRoute>
 
         <Route path="/signin">

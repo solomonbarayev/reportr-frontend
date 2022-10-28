@@ -41,30 +41,19 @@ export class Api {
     }).then(this._checkResponse);
   };
 
-  // getManager = (token: string | null, employeeID: string) => {
-  //   return fetch(`${this.BASE_URL}/employees/${employeeID}/manager`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   }).then(this._checkResponse);
-  // };
-
-  // //get tasks for a single employee by request params id (employeeID)
-  // getEmployeeTasks = (token: string | null, employeeID: string) => {
-  //   return fetch(`${this.BASE_URL}/tasks/${employeeID}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   }).then(this._checkResponse);
-  // };
   getCurrentUserTasks = (token: string | null) => {
     return fetch(`${this.BASE_URL}/tasks/mytasks`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(this._checkResponse);
+  };
+
+  getCurrentUserReports = (token: string | null) => {
+    return fetch(`${this.BASE_URL}/reports/myreports`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
