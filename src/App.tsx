@@ -4,6 +4,7 @@ import './App.css';
 import EmployeeList from './components/EmployeeList/EmployeeList';
 import EmployeeSinglePage from './components/EmployeeSinglePage/EmployeeSinglePage';
 import Nav from './components/Nav/Nav';
+import TasksPage from './components/TasksPage/TasksPage';
 
 import auth, { IRegisterData } from './utils/auth';
 import api from './utils/api';
@@ -27,6 +28,8 @@ const App: React.FC = () => {
   const history = useHistory();
 
   const userAuth: IAuth = new auth();
+
+  console.log(userData);
 
   useEffect(() => {
     if (token) {
@@ -113,6 +116,10 @@ const App: React.FC = () => {
 
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/employee/:id">
           <EmployeeSinglePage />
+        </ProtectedRoute>
+
+        <ProtectedRoute isLoggedIn={isLoggedIn} path="/mytasks">
+          <TasksPage />
         </ProtectedRoute>
 
         <Route path="/signin">
