@@ -20,14 +20,14 @@ const ReportPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Your Reports</h1>
+    <section className="reports">
+      <h1 className="reports__title">Your Reports</h1>
       {reports.length > 0 ? (
-        <ul>
+        <ul className="reports__list">
           {reports.map((report) => (
             <li key={report._id}>
-              <h2>{report.text}</h2>
-              <p>
+              <h2 className="reports__report-title">{report.text}</h2>
+              <p className="reports__subordinate-info">
                 Submitted By: {report.employeeId.firstName}{' '}
                 {report.employeeId.lastName} on {report.date}
               </p>
@@ -37,7 +37,7 @@ const ReportPage = () => {
       ) : (
         <p>You have no reports submitted to you.</p>
       )}
-    </div>
+    </section>
   );
 };
 
