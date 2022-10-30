@@ -53,68 +53,104 @@ const SignUp = ({ handleSignUp }: Props) => {
 
   return (
     <section className="signup">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
+      <h2 className="signup__title">Sign Up</h2>
+      <form onSubmit={handleSubmit} className="signup__form">
+        <label htmlFor="email" className="signup__label">
+          Email
+        </label>
         <input
+          className="signup__input"
           type="email"
           name="email"
           id="email"
           value={userData.email}
           onChange={handleChange}
+          placeholder="Enter your email"
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className="signup__label">
+          Password
+        </label>
         <input
+          className="signup__input"
           type="password"
           name="password"
           id="password"
           onChange={handleChange}
           value={userData.password}
+          placeholder="Enter your password"
         />
-        <label htmlFor="name">First Name</label>
+        <label htmlFor="name" className="signup__label">
+          First Name
+        </label>
         <input
+          className="signup__input"
           type="text"
           name="firstName"
           id="firstName"
           onChange={handleChange}
           value={userData.firstName}
+          placeholder="Enter your first name"
         />
-        <label htmlFor="name">Last Name</label>
+        <label htmlFor="name" className="signup__label">
+          Last Name
+        </label>
         <input
+          className="signup__input"
           type="text"
           name="lastName"
           id="lastName"
           onChange={handleChange}
           value={userData.lastName}
+          placeholder="Enter your last name"
         />
-        <label htmlFor="picture">Picture</label>
+        <label htmlFor="picture" className="signup__label">
+          Picture
+        </label>
         <input
+          className="signup__input"
           type="text"
           name="picture"
           id="picture"
           onChange={handleChange}
           value={userData.picture}
+          placeholder="Enter your picture url"
         />
-        <label htmlFor="position">Position</label>
+        <label htmlFor="position" className="signup__label">
+          Position
+        </label>
         <input
+          className="signup__input"
           type="text"
           name="position"
           id="position"
           onChange={handleChange}
           value={userData.position}
+          placeholder="Enter your position"
         />
-        <label htmlFor="isManager">Are you a manager?</label>
-        <input
-          type="checkbox"
-          name="isManager"
-          id="isManager"
-          onChange={handleCheckBoxChange}
-          checked={userData.isManager}
-        />
+        <div className="signup__checkbox">
+          <label htmlFor="isManager" className="signup__label">
+            Are you a manager?
+          </label>
+          <div className="signup__checkbox-container">
+            <input
+              type="checkbox"
+              name="isManager"
+              id="isManager"
+              onChange={handleCheckBoxChange}
+              checked={userData.isManager}
+            />
+            <span className="signup__check-text">Yes</span>
+          </div>
+        </div>
 
         {userData.isManager && (
           <div className="signup__subordinates">
-            <label htmlFor="subordinates">Who are you're employees?</label>
+            <label htmlFor="subordinates">
+              Who are your employees?{' '}
+              <div className="signup__subordinates-notice">
+                (employees who already have a manager cannot be selected)
+              </div>
+            </label>
             <EmployeeCheckboxes
               handleEmployeeCheckboxes={handleEmployeeCheckboxes}
               checkIfEmployeeChecked={checkIfEmployeeChecked}
@@ -122,7 +158,9 @@ const SignUp = ({ handleSignUp }: Props) => {
           </div>
         )}
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="signup__btn">
+          Sign Up
+        </button>
       </form>
     </section>
   );

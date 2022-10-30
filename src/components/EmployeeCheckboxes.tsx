@@ -1,8 +1,5 @@
 import React from 'react';
 import { useEmployees } from '../contexts/EmployeesContext';
-import { IEmployee } from '../model/EmployeeData';
-import api from '../../src/utils/api';
-// import EmployeeOption from './EmployeeOption/EmployeeOption';
 import EmployeeOption from './EmployeeOption';
 
 interface Props {
@@ -17,8 +14,8 @@ const EmployeeCheckboxes = ({
   const { employees } = useEmployees();
 
   return (
-    <div className="employee-checkboxes">
-      <ul className="employee-checkboxes__list">
+    <>
+      <ul className="signup__employees-list">
         {employees.map((employee) => (
           <EmployeeOption
             employee={employee}
@@ -28,7 +25,7 @@ const EmployeeCheckboxes = ({
           />
         ))}
       </ul>
-    </div>
+    </>
   );
 };
 

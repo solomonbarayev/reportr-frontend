@@ -45,7 +45,7 @@ const SignIn = ({ handleSignIn }: Props) => {
           placeholder="Enter your password"
           className="signin__input"
         />
-        <button type="submit" className="singin__btn">
+        <button type="submit" className="signin__btn">
           Sign In
         </button>
       </form>
