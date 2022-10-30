@@ -1,6 +1,6 @@
 import React from 'react';
-import { ITask } from '../../model/TaskData';
-import api from '../../utils/api';
+import { ITask } from '../model/TaskData';
+import api from '../utils/api';
 
 const TasksPage = () => {
   const [tasks, setTasks] = React.useState<ITask[]>([] as ITask[]);

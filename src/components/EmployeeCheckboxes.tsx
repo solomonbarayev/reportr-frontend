@@ -1,8 +1,9 @@
 import React from 'react';
-import { useEmployees } from '../../contexts/EmployeesContext';
-import { IEmployee } from '../../model/EmployeeData';
-import api from '../../utils/api';
-import EmployeeOption from '../EmployeeOption/EmployeeOption';
+import { useEmployees } from '../contexts/EmployeesContext';
+import { IEmployee } from '../model/EmployeeData';
+import api from '../../src/utils/api';
+// import EmployeeOption from './EmployeeOption/EmployeeOption';
+import EmployeeOption from './EmployeeOption';
 
 interface Props {
   handleEmployeeCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => void;

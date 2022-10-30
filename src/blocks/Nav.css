@@ -1,0 +1,17 @@
+.nav__list {
+  display: flex;
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  justify-content: center;
+  margin: 30px auto;
+  gap: 20px;
+}
+
+@media screen and (max-width: 420px) {
+  .nav__list {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

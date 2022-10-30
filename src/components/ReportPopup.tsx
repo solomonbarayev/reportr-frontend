@@ -1,6 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import PopupWithForm from './PopupWithForm';
 
 interface Props {
   isOpen: boolean;

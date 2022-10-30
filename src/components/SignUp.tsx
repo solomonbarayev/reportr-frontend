@@ -1,8 +1,6 @@
-import './SignUp.css';
-
 import React, { useState } from 'react';
-import { IRegisterData } from '../../utils/auth';
-import EmployeeCheckboxes from '../EmployeeCheckboxes/EmployeeCheckboxes';
+import { IRegisterData } from '../../src/utils/auth';
+import EmployeeCheckboxes from './EmployeeCheckboxes';
 
 interface Props {
   handleSignUp: (data: IRegisterData) => void;

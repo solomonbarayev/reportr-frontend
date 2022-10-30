@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
-import EmployeeList from './components/EmployeeList/EmployeeList';
-import EmployeeSinglePage from './components/EmployeeSinglePage/EmployeeSinglePage';
-import Nav from './components/Nav/Nav';
-import TasksPage from './components/TasksPage/TasksPage';
+import EmployeeList from './components/EmployeeList';
+import EmployeeSinglePage from './components/EmployeeSinglePage';
+import Header from './components/Header';
+import TasksPage from './components/TasksPage';
 
-import auth, { IRegisterData } from './utils/auth';
-import api from './utils/api';
-import { IAuth } from './utils/auth';
+import auth, { IRegisterData } from '../src/utils/auth';
+
+import api from '../src/utils/api';
+import { IAuth } from '../src/utils/auth';
 // import { useAuth } from './contexts/AuthContext';
 
-import SignIn from './components/SignIn/SignIn';
-import SignUp from './components/SignUp/SignUp';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import ProtectedRoute from './components/ProtectedRoute';
 import { IEmployee } from './model/EmployeeData';
 import { useEmployees } from './contexts/EmployeesContext';
-import ReportPage from './components/ReportPage/ReportPage';
+import ReportPage from './components/ReportPage';
 
-import TaskPopup from './components/TaskPopup/TaskPopup';
-import ReportPopup from './components/ReportPopup/ReportPopup';
+import TaskPopup from './components/TaskPopup';
+import ReportPopup from './components/ReportPopup';
+import { IReport } from './model/ReportData';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -71,7 +73,7 @@ const App: React.FC = () => {
         .then((res: IEmployee[]) => {
           setEmployees(res);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
         });
     }
@@ -139,10 +141,10 @@ const App: React.FC = () => {
           },
           assigningTaskToEmployee
         )
-        .then((res) => {
+        .then((res: { token: string; user: IEmployee }) => {
           console.log(res);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
         })
         .finally(() => {
@@ -161,10 +163,10 @@ const App: React.FC = () => {
         },
         reportingToManager
       )
-      .then((res) => {
+      .then((res: { message: string; report: IReport }) => {
         console.log(res);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err);
       })
       .finally(() => {
@@ -174,13 +176,13 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1>Reportr</h1>
-      <Nav
+      <Header
         handleSignOut={handleSignOut}
         isLoggedIn={isLoggedIn}
         isManager={userData.isManager}
         email={userData.email}
       />
+
       <Switch>
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/" exact>
           <EmployeeList />

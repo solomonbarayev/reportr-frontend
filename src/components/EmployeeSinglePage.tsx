@@ -1,10 +1,8 @@
-import './EmployeeSinglePage.css';
-
 import { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
-import { IEmployee, ISubordinate } from '../../model/EmployeeData';
-import api from '../../utils/api';
+import { IEmployee, ISubordinate } from '../model/EmployeeData';
+import api from '../../src/utils/api';
 
 interface Props {
   handleTaskPopupOpen: () => void;

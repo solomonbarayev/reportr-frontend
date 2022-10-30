@@ -1,19 +1,13 @@
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
+import { HeaderProps } from './Header';
 
-interface Props {
-  handleSignOut: () => void;
-  isLoggedIn: boolean;
-  isManager: boolean;
-  email: string;
-}
-
-const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: Props) => {
+const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
   const location = useLocation();
 
   return (
     <nav className="nav">
-      <ul>
+      <ul className="nav__list">
         <li>
           <NavLink
             to="/"

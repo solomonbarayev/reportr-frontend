@@ -51,8 +51,7 @@
   cursor: pointer;
   transition: all 0.2s ease-out;
   background-color: transparent;
-  /* background-image: url('../images/icons/close_icon.svg'); */
-  background-image: url('../../images/icons/close_icon.svg');
+  background-image: url('../images/icons/close_icon.svg');
   background-repeat: no-repeat;
   background-size: 30px 30px;
   background-position: center;

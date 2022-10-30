@@ -1,6 +1,6 @@
 import React from 'react';
-import { IReport } from '../../model/ReportData';
-import api from '../../utils/api';
+import { IReport } from '../model/ReportData';
+import api from '../utils/api';
 
 const ReportPage = () => {
   const [reports, setReports] = React.useState<IReport[]>([] as IReport[]);
