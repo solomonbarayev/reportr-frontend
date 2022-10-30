@@ -1,5 +1,6 @@
 import { IEmployee } from '../model/EmployeeData';
-import { ITask } from '../model/TaskData';
+import { IReportBody } from '../model/ReportData';
+import { ITask, ITaskBody } from '../model/TaskData';
 export interface IApi {
   BASE_URL: string;
   _customFetch(url: string, headers: RequestInit): Promise<any>;
@@ -15,7 +16,7 @@ export class Api {
     this.BASE_URL = 'http://localhost:3000';
   }
 
-  _checkResponse(res: Response) {
+  private _checkResponse(res: Response) {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.statusText}`);
   }
 
@@ -60,6 +61,36 @@ export class Api {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`,
       },
+    }).then(this._checkResponse);
+  };
+
+  //api call to create report
+  createReport = (
+    token: string | null,
+    report: IReportBody,
+    managerId: string | null
+  ) => {
+    return fetch(`${this.BASE_URL}/reports/${managerId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(report),
+    }).then(this._checkResponse);
+  };
+
+  //api call to create task
+  assignTask = (token: string | null, task: ITaskBody, employeeId: string) => {
+    return fetch(`${this.BASE_URL}/tasks/${employeeId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(task),
     }).then(this._checkResponse);
   };
 }

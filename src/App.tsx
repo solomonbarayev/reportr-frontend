@@ -18,19 +18,31 @@ import { IEmployee } from './model/EmployeeData';
 import { useEmployees } from './contexts/EmployeesContext';
 import ReportPage from './components/ReportPage/ReportPage';
 
+import TaskPopup from './components/TaskPopup/TaskPopup';
+import ReportPopup from './components/ReportPopup/ReportPopup';
+
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [token, setToken] = useState(localStorage.getItem('jwt'));
   const [userData, setUserData] = useState<IEmployee>({} as IEmployee);
-  // const [employees, setEmployees] = useState<IEmployee[]>([]);
+
+  const [reportingToManager, setReportingToManager] = useState<string | null>(
+    ''
+  );
+
+  const [assigningTaskToEmployee, setAssigningTaskToEmployee] = useState<
+    string | null
+  >('');
+
+  //popup states
+  const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
+  const [isReportPopupOpen, setIsReportPopupOpen] = useState(false);
 
   const { setEmployees, setLoggedIn } = useEmployees();
 
   const history = useHistory();
 
   const userAuth: IAuth = new auth();
-
-  console.log(userData);
 
   useEffect(() => {
     if (token) {
@@ -72,6 +84,7 @@ const App: React.FC = () => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           setToken(res.token);
+          setUserData(res.user);
           setIsLoggedIn(true);
           history.push('/');
         }
@@ -96,9 +109,67 @@ const App: React.FC = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
+    setUserData({} as IEmployee);
     setToken('');
     setIsLoggedIn(false);
     history.push('/signin');
+  };
+
+  const handleTaskPopupOpen = () => {
+    setIsTaskPopupOpen(true);
+  };
+
+  const handleReportPopupOpen = () => {
+    setIsReportPopupOpen(true);
+  };
+
+  const closeAllPopups = () => {
+    setIsTaskPopupOpen(false);
+    setIsReportPopupOpen(false);
+  };
+
+  const handleTaskFormSubmit = (taskName: string, dueDate: string) => {
+    assigningTaskToEmployee &&
+      api
+        .assignTask(
+          token,
+          {
+            title: taskName,
+            dueDate,
+          },
+          assigningTaskToEmployee
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          closeAllPopups();
+        });
+  };
+
+  const handleReportFormSubmit = (reportName: string, dueDate: string) => {
+    console.log(reportName, dueDate, reportingToManager);
+    api
+      .createReport(
+        token,
+        {
+          text: reportName,
+          date: dueDate,
+        },
+        reportingToManager
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        closeAllPopups();
+      });
   };
 
   return (
@@ -116,7 +187,12 @@ const App: React.FC = () => {
         </ProtectedRoute>
 
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/employee/:id">
-          <EmployeeSinglePage />
+          <EmployeeSinglePage
+            handleTaskPopupOpen={handleTaskPopupOpen}
+            handleReportPopupOpen={handleReportPopupOpen}
+            setReportingToManager={setReportingToManager}
+            setAssigningTaskToEmployee={setAssigningTaskToEmployee}
+          />
         </ProtectedRoute>
 
         <ProtectedRoute isLoggedIn={isLoggedIn} path="/mytasks">
@@ -140,6 +216,19 @@ const App: React.FC = () => {
           <Redirect to="/" />
         </Route>
       </Switch>
+
+      <TaskPopup
+        isOpen={isTaskPopupOpen}
+        onClose={closeAllPopups}
+        name="task-popup"
+        onSubmit={handleTaskFormSubmit}
+      />
+      <ReportPopup
+        isOpen={isReportPopupOpen}
+        onClose={closeAllPopups}
+        name="report-popup"
+        onSubmit={handleReportFormSubmit}
+      />
     </div>
   );
 };

@@ -22,17 +22,21 @@ const ReportPage = () => {
   return (
     <div>
       <h1>Your Reports</h1>
-      <ul>
-        {reports.map((report) => (
-          <li key={report._id}>
-            <h2>{report.text}</h2>
-            <p>
-              Submitted By: {report.employeeId.firstName}{' '}
-              {report.employeeId.lastName} on {report.date}
-            </p>
-          </li>
-        ))}
-      </ul>
+      {reports.length > 0 ? (
+        <ul>
+          {reports.map((report) => (
+            <li key={report._id}>
+              <h2>{report.text}</h2>
+              <p>
+                Submitted By: {report.employeeId.firstName}{' '}
+                {report.employeeId.lastName} on {report.date}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>You have no reports submitted to you.</p>
+      )}
     </div>
   );
 };

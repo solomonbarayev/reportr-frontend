@@ -9,3 +9,8 @@ export interface IReport {
     lastName: string;
   };
 }
+
+export interface IReportBody {
+  text: string;
+  date: string;
+}

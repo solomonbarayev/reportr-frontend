@@ -5,3 +5,8 @@ export interface ITask {
   managerId: string;
   dueDate: string;
 }
+
+export interface ITaskBody {
+  title: string;
+  dueDate: string;
+}

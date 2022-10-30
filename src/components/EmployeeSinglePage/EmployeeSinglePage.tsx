@@ -5,9 +5,20 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { IEmployee, ISubordinate } from '../../model/EmployeeData';
 import api from '../../utils/api';
-import { ITask } from '../../model/TaskData';
 
-const EmployeeSinglePage = () => {
+interface Props {
+  handleTaskPopupOpen: () => void;
+  handleReportPopupOpen: () => void;
+  setReportingToManager: (value: string) => void;
+  setAssigningTaskToEmployee: (value: string) => void;
+}
+
+const EmployeeSinglePage = ({
+  handleTaskPopupOpen,
+  handleReportPopupOpen,
+  setReportingToManager,
+  setAssigningTaskToEmployee,
+}: Props) => {
   //param
   const { id } = useParams<{ id: string }>();
 
@@ -15,23 +26,42 @@ const EmployeeSinglePage = () => {
   const [employee, setEmployee] = useState<IEmployee | undefined>(
     {} as IEmployee
   );
-  const [tasks, setTasks] = useState<ITask[]>([]);
-  const [manager, setManager] = useState<IEmployee | undefined>(
-    {} as IEmployee
-  );
+  const [subordinates, setSubordinates] = useState<ISubordinate[]>([]);
 
   useEffect(() => {
     //api call to find specific employee
     api
       .getEmployee(localStorage.getItem('jwt'), id)
-      .then((res: IEmployee) => {
-        console.log(res);
-        res && setEmployee(res);
+      .then((res) => {
+        res && setEmployee(res.employeeInfo);
+        res.managerialInfo &&
+          setSubordinates(res.managerialInfo.mySubordinates);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [id]);
+
+  const handleReportButtonClick = () => {
+    handleReportPopupOpen();
+    // console.log("employee's manager id: ", employee?.managerId?._id);
+    // setReportingToManager(employee?.managerId?._id);
+    const managerId = employee?.managerId?._id;
+    if (managerId) {
+      console.log(managerId);
+      setReportingToManager(managerId);
+    }
+  };
+
+  const handleTaskButtonClick = (subordinate: ISubordinate) => {
+    handleTaskPopupOpen();
+
+    const employeeId = subordinate?._id;
+    if (employeeId) {
+      console.log(employeeId);
+      setAssigningTaskToEmployee(employeeId);
+    }
+  };
 
   return (
     <div>
@@ -46,7 +76,7 @@ const EmployeeSinglePage = () => {
               Manager:{' '}
               {`${employee?.managerId.firstName} ${employee?.managerId.lastName}`}
               <span>
-                <button>Report</button>
+                <button onClick={handleReportButtonClick}>Report</button>
               </span>
             </p>
           )}
@@ -70,14 +100,18 @@ const EmployeeSinglePage = () => {
           <p>No tasks assigned</p>
         </div>
       )}
-      {employee?.mySubordinates?.length !== 0 ? (
+      {subordinates.length !== 0 ? (
         <div className="subordinates">
           <h2>Subordinates</h2>
           <ul>
-            {employee?.mySubordinates?.map((subordinate: ISubordinate) => (
+            {subordinates.map((subordinate: ISubordinate) => (
               <li key={subordinate._id}>
-                <span>{subordinate.firstName}</span>
-                <button>Assign Task</button>
+                <span>
+                  {subordinate.firstName} {subordinate.lastName}
+                </span>
+                <button onClick={() => handleTaskButtonClick(subordinate)}>
+                  Assign Task
+                </button>
               </li>
             ))}
           </ul>
