@@ -8,32 +8,36 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
   return (
     <nav className="nav">
       <ul className="nav__list">
-        <li>
-          <NavLink
-            to="/"
-            exact={true}
-            className="nav__link"
-            activeClassName="nav__link_active">
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/mytasks"
-            className="nav__link"
-            activeClassName="nav__link_active">
-            My Tasks
-          </NavLink>
-        </li>
-        {isManager && (
-          <li>
-            <NavLink
-              to="/myreports"
-              className="nav__link"
-              activeClassName="nav__link_active">
-              My Reports
-            </NavLink>
-          </li>
+        {isLoggedIn && (
+          <>
+            <li>
+              <NavLink
+                to="/"
+                exact={true}
+                className="nav__link"
+                activeClassName="nav__link_active">
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/mytasks"
+                className="nav__link"
+                activeClassName="nav__link_active">
+                My Tasks
+              </NavLink>
+            </li>
+            {isManager && (
+              <li>
+                <NavLink
+                  to="/myreports"
+                  className="nav__link"
+                  activeClassName="nav__link_active">
+                  My Reports
+                </NavLink>
+              </li>
+            )}
+          </>
         )}
         {isLoggedIn ? (
           <li>

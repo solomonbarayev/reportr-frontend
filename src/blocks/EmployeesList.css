@@ -44,6 +44,22 @@
   justify-content: space-between;
 }
 
+.employees__list-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.employees__list-item-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .employees__text {
   margin-block-end: 0;
   margin-block-start: 0;
@@ -51,6 +67,10 @@
 
 .employees__text_bold {
   font-weight: 600;
+}
+
+.employees__view-btn-link {
+  text-decoration: none;
 }
 
 .employees__view-btn {
@@ -85,5 +105,9 @@
   .employees {
     padding-left: 16px;
     padding-right: 16px;
+  }
+  .employees__list-item-content {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

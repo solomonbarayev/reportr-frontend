@@ -18,29 +18,41 @@ const SignIn = ({ handleSignIn }: Props) => {
   };
 
   return (
-    <section>
-      <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
+    <section className="signin">
+      <h2 className="signin__title">Sign In</h2>
+      <form onSubmit={handleSubmit} className="signin__form">
+        <label htmlFor="email" className="signin__label">
+          Email
+        </label>
         <input
           type="email"
           name="email"
           id="email"
           value={userData.email}
           onChange={handleChange}
+          className="signin__input"
+          placeholder="Enter your email"
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className="signin__label">
+          Password
+        </label>
         <input
           type="password"
           name="password"
           id="password"
           onChange={handleChange}
           value={userData.password}
+          placeholder="Enter your password"
+          className="signin__input"
         />
-        <button type="submit">Sign In</button>
+        <button type="submit" className="singin__btn">
+          Sign In
+        </button>
       </form>
       {/* or sign in  */}
-      <Link to="/signup">Or Register</Link>
+      <Link to="/signup" className="signin__link">
+        Or Register
+      </Link>
     </section>
   );
 };

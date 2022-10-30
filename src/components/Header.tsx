@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Nav from './Nav';
 
 export interface HeaderProps {
@@ -16,7 +17,9 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header className="header">
-      <h2 className="header__logo">Reportr</h2>
+      <Link to="/" className="header__logo-container">
+        <h2 className="header__logo">Reportr</h2>
+      </Link>
       <Nav
         handleSignOut={handleSignOut}
         isLoggedIn={isLoggedIn}

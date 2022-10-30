@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import EmployeeListItem from './EmployeeListItem';
-import employeeData from '../data/data';
-import { employeeDataArray } from '../model/employeeType';
 import { useEmployees } from '../contexts/EmployeesContext';
 
 const EmployeeList: React.FC = () => {
-  //useState for employeeData with typescript
-  // const [employees, setEmployees] = useState<employeeDataArray>(employeeData);
-
   const { employees } = useEmployees();
 
   return (
