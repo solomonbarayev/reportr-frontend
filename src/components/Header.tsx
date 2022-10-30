@@ -16,7 +16,7 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header className="header">
-      <h1 className="header__logo">Reportr</h1>
+      <h2 className="header__logo">Reportr</h2>
       <Nav
         handleSignOut={handleSignOut}
         isLoggedIn={isLoggedIn}

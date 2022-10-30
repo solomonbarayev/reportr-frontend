@@ -9,9 +9,30 @@
   gap: 20px;
 }
 
+.nav__link {
+  text-decoration: none;
+  color: #000;
+  transition: all 0.3s ease;
+  padding: 10px 0;
+}
+
+.nav__link:hover {
+  color: rgb(8, 37, 164);
+}
+
+.nav__link_active {
+  color: rgb(8, 37, 164);
+  box-shadow: 0 -2px 0 0 rgb(8, 37, 164) inset;
+  -webkit-box-shadow: 0 -2px 0 0 rgb(8, 37, 164) inset;
+  -moz-box-shadow: 0 -2px 0 0 rgb(8, 37, 164) inset;
+}
+
 @media screen and (max-width: 420px) {
   .nav__list {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+  }
+  .nav__link {
+    padding: 5px 0;
   }
 }

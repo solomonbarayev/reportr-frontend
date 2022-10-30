@@ -11,16 +11,17 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
         <li>
           <NavLink
             to="/"
-            className="nav_link"
-            activeClassName="nav_link_active">
+            exact={true}
+            className="nav__link"
+            activeClassName="nav__link_active">
             Home
           </NavLink>
         </li>
         <li>
           <NavLink
             to="/mytasks"
-            className="nav_link"
-            activeClassName="nav_link_active">
+            className="nav__link"
+            activeClassName="nav__link_active">
             My Tasks
           </NavLink>
         </li>
@@ -28,15 +29,15 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
           <li>
             <NavLink
               to="/myreports"
-              className="nav_link"
-              activeClassName="nav_link_active">
+              className="nav__link"
+              activeClassName="nav__link_active">
               My Reports
             </NavLink>
           </li>
         )}
         {isLoggedIn ? (
           <li>
-            <Link to="/" onClick={handleSignOut}>
+            <Link to="/" className="nav__link" onClick={handleSignOut}>
               Sign Out
             </Link>
           </li>
@@ -46,8 +47,8 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
               <li>
                 <NavLink
                   to="/signin"
-                  className="nav_link"
-                  activeClassName="nav_link_active">
+                  className="nav__link"
+                  activeClassName="nav__link_active">
                   Sign In
                 </NavLink>
               </li>
@@ -56,8 +57,8 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
               <li>
                 <NavLink
                   to="/signup"
-                  className="nav_link"
-                  activeClassName="nav_link_active">
+                  className="nav__link"
+                  activeClassName="nav__link_active">
                   Sign Up
                 </NavLink>
               </li>

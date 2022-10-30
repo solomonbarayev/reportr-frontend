@@ -12,16 +12,14 @@ const EmployeeList: React.FC = () => {
   const { employees } = useEmployees();
 
   return (
-    <div>
-      <h1>Employee List</h1>
-      <ul>
-        {/* <EmployeeListItem employees={employees} setEmployees={setEmployees} />
-         */}
+    <section className="employees">
+      <h1 className="employees__title">Employee List</h1>
+      <ul className="employees__list">
         {employees.map((employee) => (
           <EmployeeListItem key={employee._id} employee={employee} />
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 
