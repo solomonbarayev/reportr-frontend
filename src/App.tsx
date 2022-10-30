@@ -194,6 +194,7 @@ const App: React.FC = () => {
             handleReportPopupOpen={handleReportPopupOpen}
             setReportingToManager={setReportingToManager}
             setAssigningTaskToEmployee={setAssigningTaskToEmployee}
+            loggedInUser={userData}
           />
         </ProtectedRoute>
 
