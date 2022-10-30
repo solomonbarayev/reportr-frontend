@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IRegisterData } from '../../src/utils/auth';
 import EmployeeCheckboxes from './EmployeeCheckboxes';
 
@@ -162,6 +163,10 @@ const SignUp = ({ handleSignUp }: Props) => {
           Sign Up
         </button>
       </form>
+
+      <Link to="/login" className="signup__link">
+        Already have an account? Log in
+      </Link>
     </section>
   );
 };

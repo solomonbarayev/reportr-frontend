@@ -43,6 +43,7 @@
 .signin__link {
   text-decoration: none;
   color: rgb(8, 37, 164);
+  font-size: 1rem;
 }
 
 @media screen and (max-width: 420px) {

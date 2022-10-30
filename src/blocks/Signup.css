@@ -1,7 +1,7 @@
 .signup {
   text-align: center;
   padding-top: 35px;
-  padding-bottom: 35px;
+  padding-bottom: 55px;
 }
 
 .signup__title {
@@ -44,6 +44,7 @@
 .signup__link {
   text-decoration: none;
   color: rgb(8, 37, 164);
+  font-size: 1rem;
 }
 
 .signup__checkbox {

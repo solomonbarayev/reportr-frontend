@@ -70,6 +70,11 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
           </>
         )}
       </ul>
+      {isLoggedIn && (
+        <p className="nav__email">
+          <span className="nav__email-accent">Logged in:</span> {email}
+        </p>
+      )}
     </nav>
   );
 };
