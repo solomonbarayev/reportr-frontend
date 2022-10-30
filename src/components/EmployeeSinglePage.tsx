@@ -54,7 +54,6 @@ const EmployeeSinglePage = ({
 
     const managerId = employee?.managerId?._id;
     if (managerId) {
-      console.log(managerId);
       setReportingToManager(managerId);
     }
   };
@@ -64,7 +63,6 @@ const EmployeeSinglePage = ({
 
     const employeeId = subordinate?._id;
     if (employeeId) {
-      console.log(employeeId);
       setAssigningTaskToEmployee(employeeId);
     }
   };

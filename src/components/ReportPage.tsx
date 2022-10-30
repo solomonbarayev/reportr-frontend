@@ -1,6 +1,7 @@
 import React from 'react';
 import { IReport } from '../model/ReportData';
 import api from '../utils/api';
+import { BsTrash } from 'react-icons/bs';
 
 const ReportPage = () => {
   const [reports, setReports] = React.useState<IReport[]>([] as IReport[]);
@@ -18,18 +19,37 @@ const ReportPage = () => {
       });
   }, []);
 
+  const handleDeleteClick = (id: string) => {
+    api
+      .deleteReport(localStorage.getItem('jwt'), id)
+      .then((res) => {
+        if (res) {
+          setReports(reports.filter((report) => report._id !== id));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <section className="reports">
       <h1 className="reports__title">Your Reports</h1>
       {reports.length > 0 ? (
         <ul className="reports__list">
           {reports.map((report) => (
-            <li key={report._id}>
-              <h2 className="reports__report-title">{report.text}</h2>
-              <p className="reports__subordinate-info">
-                Submitted By: {report.employeeId.firstName}{' '}
-                {report.employeeId.lastName} on {report.date}
-              </p>
+            <li key={report._id} className="reports__list-item">
+              <div className="reports__list-item-text">
+                <h2 className="reports__report-title">{report.text}</h2>
+                <p className="reports__subordinate-info">
+                  Submitted By: {report.employeeId.firstName}{' '}
+                  {report.employeeId.lastName} on {report.date}
+                </p>
+              </div>
+              <BsTrash
+                className="reports__delete-icon"
+                onClick={() => handleDeleteClick(report._id)}
+              />
             </li>
           ))}
         </ul>

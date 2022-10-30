@@ -14,6 +14,7 @@ export class Api {
 
   constructor() {
     this.BASE_URL = 'http://localhost:3000';
+    // this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
   }
 
   private _checkResponse(res: Response) {
@@ -91,6 +92,30 @@ export class Api {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(task),
+    }).then(this._checkResponse);
+  };
+
+  //delete report
+  deleteReport = (token: string | null, reportId: string) => {
+    return fetch(`${this.BASE_URL}/reports/${reportId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(this._checkResponse);
+  };
+
+  //delete all reports for user
+  deleteAllReportsForUser = (token: string | null) => {
+    return fetch(`${this.BASE_URL}/reports`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 }

@@ -17,10 +17,10 @@
   justify-content: center;
   gap: 20px;
   list-style: circle;
-  /* padding-inline-start: 0; */
+  padding-inline-start: 0;
   margin-block-start: 0;
   margin-block-end: 0;
-  max-width: 400px;
+  max-width: 480px;
   width: 100%;
   margin: 30px auto;
   box-sizing: border-box;
@@ -44,8 +44,21 @@
   margin-block-start: 0;
 }
 
-@media screen and (max-width: 420px) {
+.reports__list-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.reports__delete-icon {
+  margin-left: auto;
+  cursor: pointer;
+  color: #ff0000;
+}
+
+@media screen and (max-width: 620px) {
   .reports {
     padding-right: 16px;
+    padding-left: 16px;
   }
 }
