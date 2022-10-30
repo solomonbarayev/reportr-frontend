@@ -35,7 +35,7 @@ const ReportPopup = ({ isOpen, name, onClose, onSubmit }: Props) => {
             id="report-text"
             type="text"
             name="report-text"
-            placeholder="Task Name"
+            placeholder="Report Text"
             required
             minLength={2}
             value={reportText || ''}

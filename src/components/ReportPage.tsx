@@ -10,7 +10,6 @@ const ReportPage = () => {
       .getCurrentUserReports(localStorage.getItem('jwt'))
       .then((res) => {
         if (res) {
-          console.log(res);
           setReports(res);
         }
       })
