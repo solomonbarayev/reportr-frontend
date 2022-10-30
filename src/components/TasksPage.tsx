@@ -17,15 +17,15 @@ const TasksPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Your Tasks</h1>
+    <section className="tasks">
+      <h1 className="tasks__title">Your Tasks</h1>
       {tasks.length > 0 ? (
-        <ul>
+        <ul className="tasks__list">
           {tasks.map((task) => (
             <li key={task._id}>
-              <h2>
-                <span>{task.title}</span>
-                <span>{task.dueDate}</span>
+              <h2 className="tasks__task-title">
+                <span>Task: {task.title}</span>
+                <span>Due date: {task.dueDate}</span>
               </h2>
             </li>
           ))}
@@ -33,7 +33,7 @@ const TasksPage = () => {
       ) : (
         <p>You have no tasks assigned to you.</p>
       )}
-    </div>
+    </section>
   );
 };
 
