@@ -82,7 +82,9 @@ const EmployeeSinglePage = ({
             <h1 className="profile__title">
               Name: {`${employee?.firstName} ${employee?.lastName}`}
             </h1>
-            <p className="profile__info-text">Position: {employee?.position}</p>
+            <p className="profile__info-text profile__info-text_type_position">
+              Position: {employee?.position}
+            </p>
 
             <div className="profile__info-divider"></div>
 

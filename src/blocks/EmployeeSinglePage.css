@@ -14,6 +14,7 @@
 .profile__image {
   min-width: 170px;
   min-height: 170px;
+  max-width: 170px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -39,6 +40,10 @@
   font-weight: 400;
   display: flex;
   flex-direction: column;
+}
+
+.profile__info-text_type_position {
+  margin-top: 10px;
 }
 
 .profile__info-text_type_manager {
@@ -178,8 +183,29 @@
 }
 
 @media screen and (max-width: 650px) {
+  .profile__info {
+    flex-direction: column;
+    gap: 20px;
+  }
+
   .profile__subordiantes_container {
     flex-direction: column;
     gap: 15px;
+  }
+  .profile__tasks-item {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .profile__tasks-title,
+  .profile__subordinates-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .profile__image {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
