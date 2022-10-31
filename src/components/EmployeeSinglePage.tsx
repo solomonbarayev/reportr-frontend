@@ -68,7 +68,7 @@ const EmployeeSinglePage = () => {
     }
   };
 
-  if (!isEmployeeLoading) {
+  if (isEmployeeLoading) {
     return <Loader />;
   }
 
