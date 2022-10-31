@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .tasks__title {
   font-size: 1.6rem;
@@ -17,10 +19,10 @@
   justify-content: center;
   gap: 20px;
   list-style: circle;
-  /* padding-inline-start: 0; */
+  padding-inline-start: 0;
   margin-block-start: 0;
   margin-block-end: 0;
-  max-width: 440px;
+  max-width: 480px;
   width: 100%;
   margin: 30px auto;
   box-sizing: border-box;
@@ -36,8 +38,15 @@
   flex-direction: column;
 }
 
-@media screen and (max-width: 420px) {
-  .tasks {
-    padding-right: 16px;
-  }
+.tasks__complete-icon {
+  margin-left: auto;
+  cursor: pointer;
+  color: #105710;
+  font-size: 1.5rem;
+}
+
+.tasks__item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

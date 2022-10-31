@@ -17,6 +17,19 @@ const TasksPage = () => {
       });
   }, []);
 
+  const handleCompleteTask = (id: string) => {
+    api
+      .completeTask(localStorage.getItem('jwt'), id)
+      .then((res) => {
+        if (res) {
+          setTasks(tasks.filter((task) => task._id !== id));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <section className="tasks">
       <h1 className="tasks__title">Your Tasks</h1>
@@ -28,6 +41,10 @@ const TasksPage = () => {
                 <span>Task: {task.title}</span>
                 <span>Due date: {task.dueDate}</span>
               </h2>
+              <AiOutlineCheckSquare
+                className="tasks__complete-icon"
+                onClick={() => handleCompleteTask(task._id)}
+              />
             </li>
           ))}
         </ul>

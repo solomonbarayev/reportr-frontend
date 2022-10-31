@@ -13,8 +13,8 @@ export class Api {
   BASE_URL: string;
 
   constructor() {
-    // this.BASE_URL = 'http://localhost:3000';
-    this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
+    this.BASE_URL = 'http://localhost:3000';
+    // this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
   }
 
   private _checkResponse(res: Response) {
@@ -110,6 +110,18 @@ export class Api {
   //delete all reports for user
   deleteAllReportsForUser = (token: string | null) => {
     return fetch(`${this.BASE_URL}/reports`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(this._checkResponse);
+  };
+
+  //complete task
+  completeTask = (token: string | null, taskId: string) => {
+    return fetch(`${this.BASE_URL}/tasks/${taskId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
