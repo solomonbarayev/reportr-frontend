@@ -8,6 +8,7 @@ import { IEmployee, ISubordinate } from '../model/EmployeeData';
 import api from '../../src/utils/api';
 import { usePopups } from '../contexts/PopupsContext';
 import { useAuth } from '../contexts/AuthContext';
+import Loader from './Loader';
 
 const EmployeeSinglePage = () => {
   const authContext = useAuth();
@@ -25,6 +26,8 @@ const EmployeeSinglePage = () => {
 
   const [isMyPage, setIsMyPage] = useState<boolean>(false);
 
+  const [isEmployeeLoading, setIsEmployeeLoading] = useState<boolean>(true);
+
   // if id is the same as the logged in user's id, then it's my page
   useEffect(() => {
     id === authContext!.userData._id ? setIsMyPage(true) : setIsMyPage(false);
@@ -41,6 +44,9 @@ const EmployeeSinglePage = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsEmployeeLoading(false);
       });
   }, [id]);
 
@@ -61,6 +67,10 @@ const EmployeeSinglePage = () => {
       popupsContext!.setAssigningTaskToEmployee(employeeId);
     }
   };
+
+  if (!isEmployeeLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="profile">

@@ -8,6 +8,7 @@ interface IContextState {
   setEmployees: React.Dispatch<React.SetStateAction<IEmployee[]>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  isEmployeesLoading: boolean;
 }
 
 const EmployeesContext = createContext({} as IContextState);
@@ -19,18 +20,33 @@ export const EmployeesProvider = ({
 }) => {
   const [employees, setEmployees] = useState<IEmployee[]>([]);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [isEmployeesLoading, setIsEmployeesLoading] = useState<boolean>(true);
 
   const authContext = useAuth();
 
   useEffect(() => {
-    api.getAllEmployees().then((res) => {
-      setEmployees(res);
-    });
+    api
+      .getAllEmployees()
+      .then((res) => {
+        setEmployees(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsEmployeesLoading(false);
+      });
   }, [authContext!.isLoggedIn]);
 
   return (
     <EmployeesContext.Provider
-      value={{ employees, setEmployees, loggedIn, setLoggedIn }}>
+      value={{
+        employees,
+        setEmployees,
+        loggedIn,
+        setLoggedIn,
+        isEmployeesLoading,
+      }}>
       {children}
     </EmployeesContext.Provider>
   );

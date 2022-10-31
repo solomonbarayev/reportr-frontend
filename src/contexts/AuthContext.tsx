@@ -14,6 +14,8 @@ interface IAuthContextState {
   handleSignIn: (email: string, password: string) => void;
   handleSignUp: (data: IRegisterData) => void;
   handleSignOut: () => void;
+  isCheckingToken: boolean;
+  setIsCheckingToken: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 type AuthContextProviderProps = {
@@ -26,6 +28,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('jwt'));
   const [userData, setUserData] = useState<IEmployee>({} as IEmployee);
+  const [isCheckingToken, setIsCheckingToken] = useState<boolean>(true);
 
   const history = useHistory();
 
@@ -46,11 +49,18 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
         .catch((err: any) => {
           console.log(err);
           history.push('/signin');
+        })
+        .finally(() => {
+          setIsCheckingToken(false);
+          console.log(isCheckingToken);
         });
+    } else {
+      setIsCheckingToken(false);
     }
   }, []);
 
   const handleSignIn = (email: string, password: string) => {
+    setIsCheckingToken(true);
     userAuth
       .login(email, password)
       .then((res: any) => {
@@ -64,6 +74,9 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
       })
       .catch((err: any) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsCheckingToken(false);
       });
   };
 
@@ -100,6 +113,8 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
         handleSignIn,
         handleSignUp,
         handleSignOut,
+        isCheckingToken,
+        setIsCheckingToken,
       }}>
       {children}
     </AuthContext.Provider>

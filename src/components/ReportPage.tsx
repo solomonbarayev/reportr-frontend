@@ -2,9 +2,11 @@ import React from 'react';
 import { IReport } from '../model/ReportData';
 import api from '../utils/api';
 import { BsTrash } from 'react-icons/bs';
+import Loader from './Loader';
 
 const ReportPage = () => {
   const [reports, setReports] = React.useState<IReport[]>([] as IReport[]);
+  const [isReportsLoading, setIsReportsLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     api
@@ -16,6 +18,9 @@ const ReportPage = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsReportsLoading(false);
       });
   }, []);
 
@@ -31,6 +36,10 @@ const ReportPage = () => {
         console.log(err);
       });
   };
+
+  if (isReportsLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="reports">

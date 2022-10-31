@@ -1,10 +1,14 @@
 import React from 'react';
-
+import Loader from './Loader';
 import EmployeeListItem from './EmployeeListItem';
 import { useEmployees } from '../contexts/EmployeesContext';
 
 const EmployeeList: React.FC = () => {
-  const { employees } = useEmployees();
+  const { employees, isEmployeesLoading } = useEmployees();
+
+  if (isEmployeesLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="employees">

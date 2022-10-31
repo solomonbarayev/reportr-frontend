@@ -1,10 +1,12 @@
+import TaskPageItem from './TaskPageItem';
 import React from 'react';
 import { ITask } from '../model/TaskData';
 import api from '../utils/api';
-import { AiOutlineCheckSquare } from 'react-icons/ai';
+import Loader from './Loader';
 
 const TasksPage = () => {
   const [tasks, setTasks] = React.useState<ITask[]>([] as ITask[]);
+  const [isTasksLoading, setIsTasksLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     api
@@ -14,6 +16,9 @@ const TasksPage = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsTasksLoading(false);
       });
   }, []);
 
@@ -30,22 +35,17 @@ const TasksPage = () => {
       });
   };
 
+  if (isTasksLoading) {
+    return <Loader />;
+  }
+
   return (
     <section className="tasks">
       <h1 className="tasks__title">Your Tasks</h1>
       {tasks.length > 0 ? (
         <ul className="tasks__list">
           {tasks.map((task) => (
-            <li key={task._id} className="tasks__item">
-              <h2 className="tasks__task-title">
-                <span>Task: {task.title}</span>
-                <span>Due date: {task.dueDate}</span>
-              </h2>
-              <AiOutlineCheckSquare
-                className="tasks__complete-icon"
-                onClick={() => handleCompleteTask(task._id)}
-              />
-            </li>
+            <TaskPageItem task={task} handleCompleteTask={handleCompleteTask} />
           ))}
         </ul>
       ) : (
