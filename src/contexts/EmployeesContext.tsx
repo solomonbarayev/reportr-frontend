@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { IEmployee } from '../model/EmployeeData';
 import api from '../utils/api';
+import { useAuth } from './AuthContext';
 
 interface IContextState {
   employees: IEmployee[];
@@ -11,8 +12,6 @@ interface IContextState {
 
 const EmployeesContext = createContext({} as IContextState);
 
-const token = localStorage.getItem('jwt');
-
 export const EmployeesProvider = ({
   children,
 }: {
@@ -21,11 +20,13 @@ export const EmployeesProvider = ({
   const [employees, setEmployees] = useState<IEmployee[]>([]);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
+  const authContext = useAuth();
+
   useEffect(() => {
     api.getAllEmployees().then((res) => {
       setEmployees(res);
     });
-  }, []);
+  }, [authContext!.isLoggedIn]);
 
   return (
     <EmployeesContext.Provider

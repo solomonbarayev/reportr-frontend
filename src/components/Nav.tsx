@@ -1,14 +1,16 @@
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { HeaderProps } from './Header';
+import { useAuth } from '../contexts/AuthContext';
 
-const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
+const Nav = () => {
   const location = useLocation();
+
+  const authContext = useAuth();
 
   return (
     <nav className="nav">
       <ul className="nav__list">
-        {isLoggedIn && (
+        {authContext!.isLoggedIn && (
           <>
             <li>
               <NavLink
@@ -27,7 +29,7 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
                 My Tasks
               </NavLink>
             </li>
-            {isManager && (
+            {authContext!.userData.isManager && (
               <li>
                 <NavLink
                   to="/myreports"
@@ -39,9 +41,12 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
             )}
           </>
         )}
-        {isLoggedIn ? (
+        {authContext!.isLoggedIn ? (
           <li>
-            <Link to="/" className="nav__link" onClick={handleSignOut}>
+            <Link
+              to="/"
+              className="nav__link"
+              onClick={authContext!.handleSignOut}>
               Sign Out
             </Link>
           </li>
@@ -70,9 +75,10 @@ const Nav = ({ isLoggedIn, handleSignOut, isManager, email }: HeaderProps) => {
           </>
         )}
       </ul>
-      {isLoggedIn && (
+      {authContext!.isLoggedIn && (
         <p className="nav__email">
-          <span className="nav__email-accent">Logged in:</span> {email}
+          <span className="nav__email-accent">Logged in:</span>{' '}
+          {authContext!.userData.email}
         </p>
       )}
     </nav>

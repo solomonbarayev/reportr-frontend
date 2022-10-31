@@ -9,31 +9,22 @@ export interface IRegisterData {
   mySubordinates: string[];
 }
 
-export interface IAuth {
-  BASE_URL: string;
-  _customFetch(url: string, headers: RequestInit): Promise<any>;
-  login(email: string, password: string): Promise<any>;
-  register(data: IRegisterData): Promise<any>;
-  checkToken(token: string): Promise<any>;
-}
-
-export default class Auth implements IAuth {
+export default class Auth {
   BASE_URL: string;
 
   constructor() {
-    this.BASE_URL = 'http://localhost:3000';
-    // this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
+    // this.BASE_URL = 'http://localhost:3000';
+    this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
   }
 
-  _customFetch(url: string, headers: Object) {
+  private _customFetch(url: string, headers: Object) {
     return fetch(url, headers).then((res) =>
       res.ok ? res.json() : Promise.reject(res.statusText)
     );
   }
 
   register(data: IRegisterData) {
-    console.log(data);
-    return this._customFetch(`${this.BASE_URL}/signup`, {
+    return this._customFetch(`${this.BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +35,7 @@ export default class Auth implements IAuth {
   }
 
   login(email: string, password: string) {
-    return this._customFetch(`${this.BASE_URL}/signin`, {
+    return this._customFetch(`${this.BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

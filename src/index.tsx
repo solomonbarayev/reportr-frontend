@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import EmployeesProvider from './contexts/EmployeesContext';
+import AuthProvider from './contexts/AuthContext';
+import PopupsProvider from './contexts/PopupsContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,9 +13,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <EmployeesProvider>
-        <App />
-      </EmployeesProvider>
+      <AuthProvider>
+        <PopupsProvider>
+          <EmployeesProvider>
+            <App />
+          </EmployeesProvider>
+        </PopupsProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -1,16 +1,19 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
+import { usePopups } from '../contexts/PopupsContext';
 
 interface Props {
-  isOpen: boolean;
+  // isOpen: boolean;
   name: string;
-  onClose: () => void;
-  onSubmit: (taskName: string, dueDate: string) => void;
+  // onClose: () => void;
+  // onSubmit: (taskName: string, dueDate: string) => void;
 }
 
-const TaskPopup = ({ isOpen, name, onClose, onSubmit }: Props) => {
+const TaskPopup = ({ name }: Props) => {
   const [taskName, setTaskName] = React.useState('');
   const [dueDate, setDueDate] = React.useState('');
+
+  const popupsContext = usePopups();
 
   const handleTaskNameChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName(evt.target.value);
@@ -22,14 +25,14 @@ const TaskPopup = ({ isOpen, name, onClose, onSubmit }: Props) => {
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit(taskName, dueDate);
+    popupsContext!.handleTaskFormSubmit(taskName, dueDate);
   };
 
   return (
     <PopupWithForm
-      isOpen={isOpen}
+      isOpen={popupsContext!.isTaskPopupOpen}
       name={name}
-      onClose={onClose}
+      onClose={popupsContext!.closeAllPopups}
       onSubmit={handleSubmit}
       title="Add Task"
       submitButtonText="Add Task">

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-interface Props {
-  handleSignIn: (email: string, password: string) => void;
-}
+// interface Props {
+//   handleSignIn: (email: string, password: string) => void;
+// }
 
-const SignIn = ({ handleSignIn }: Props) => {
+const SignIn = () => {
   const [userData, setUserData] = useState({ email: '', password: '' });
+
+  const authContext = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -14,7 +17,7 @@ const SignIn = ({ handleSignIn }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSignIn(userData.email, userData.password);
+    authContext!.handleSignIn(userData.email, userData.password);
   };
 
   return (

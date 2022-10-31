@@ -1,30 +1,27 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
+import { usePopups } from '../contexts/PopupsContext';
 
 interface Props {
-  isOpen: boolean;
   name: string;
-  onClose: () => void;
-  onSubmit: (reportText: string, reportDate: string) => void;
-  // onSubmit: (evt: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const ReportPopup = ({ isOpen, name, onClose, onSubmit }: Props) => {
+const ReportPopup = ({ name }: Props) => {
   const [reportText, setReportText] = React.useState('');
   const [reportDate, setReportDate] = React.useState('');
 
-  //useParams to set managerId
+  const popupsContext = usePopups();
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit(reportText, reportDate);
+    popupsContext!.handleReportFormSubmit(reportText, reportDate);
   };
 
   return (
     <PopupWithForm
-      isOpen={isOpen}
+      isOpen={popupsContext!.isReportPopupOpen}
       name={name}
-      onClose={onClose}
+      onClose={popupsContext!.closeAllPopups}
       onSubmit={handleSubmit}
       title="Add Report"
       submitButtonText="Add Report">

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { IAuth } from '../utils/auth';
 import { IEmployee } from '../model/EmployeeData';
 import { IRegisterData } from '../utils/auth';
 import auth from '../utils/auth';
@@ -14,6 +13,7 @@ interface IAuthContextState {
   setUserData: React.Dispatch<React.SetStateAction<IEmployee>>;
   handleSignIn: (email: string, password: string) => void;
   handleSignUp: (data: IRegisterData) => void;
+  handleSignOut: () => void;
 }
 
 type AuthContextProviderProps = {
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
 
   const history = useHistory();
 
-  const userAuth: IAuth = new auth();
+  const userAuth = new auth();
 
   useEffect(() => {
     if (token) {
@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
           localStorage.setItem('jwt', res.token);
           setToken(res.token);
           setIsLoggedIn(true);
+          setUserData(res.user);
           history.push('/');
         }
       })
@@ -79,6 +80,14 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
       });
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt');
+    setUserData({} as IEmployee);
+    setToken('');
+    setIsLoggedIn(false);
+    history.push('/signin');
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -90,6 +99,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
         setUserData,
         handleSignIn,
         handleSignUp,
+        handleSignOut,
       }}>
       {children}
     </AuthContext.Provider>

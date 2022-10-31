@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IRegisterData } from '../../src/utils/auth';
 import EmployeeCheckboxes from './EmployeeCheckboxes';
+import { useAuth } from '../contexts/AuthContext';
 
-interface Props {
-  handleSignUp: (data: IRegisterData) => void;
-}
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  position: '',
+  picture: '',
+  isManager: false,
+  mySubordinates: [],
+};
 
-const SignUp = ({ handleSignUp }: Props) => {
-  const [userData, setUserData] = useState<IRegisterData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    position: '',
-    picture: '',
-    isManager: false,
-    mySubordinates: [],
-  } as IRegisterData);
+const SignUp = () => {
+  const [userData, setUserData] = useState<IRegisterData>(
+    initialState as IRegisterData
+  );
+
+  const authContext = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -49,7 +52,7 @@ const SignUp = ({ handleSignUp }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSignUp(userData);
+    authContext!.handleSignUp(userData);
   };
 
   return (

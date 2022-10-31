@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Props {
-  isLoggedIn: boolean;
   children: React.ReactNode;
   path: string;
   exact?: boolean;
 }
 
-const ProtectedRoute = ({ isLoggedIn, children, ...props }: Props) => {
-  return isLoggedIn ? (
+const ProtectedRoute = ({ children, ...props }: Props) => {
+  const authContext = useAuth();
+  return authContext!.isLoggedIn ? (
     <Route {...props}>{children}</Route>
   ) : (
     <Redirect to="/signin" />
