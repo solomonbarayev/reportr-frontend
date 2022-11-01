@@ -17,11 +17,17 @@ const ReportPopup = ({ name }: Props) => {
     popupsContext!.handleReportFormSubmit(reportText, reportDate);
   };
 
+  const handleClose = () => {
+    popupsContext!.closeAllPopups();
+    setReportText('');
+    setReportDate('');
+  };
+
   return (
     <PopupWithForm
       isOpen={popupsContext!.isReportPopupOpen}
       name={name}
-      onClose={popupsContext!.closeAllPopups}
+      onClose={handleClose}
       onSubmit={handleSubmit}
       title="Add Report"
       submitButtonText="Add Report">

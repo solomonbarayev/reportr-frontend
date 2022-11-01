@@ -3,10 +3,7 @@ import PopupWithForm from './PopupWithForm';
 import { usePopups } from '../contexts/PopupsContext';
 
 interface Props {
-  // isOpen: boolean;
   name: string;
-  // onClose: () => void;
-  // onSubmit: (taskName: string, dueDate: string) => void;
 }
 
 const TaskPopup = ({ name }: Props) => {
@@ -23,6 +20,12 @@ const TaskPopup = ({ name }: Props) => {
     setDueDate(evt.target.value);
   };
 
+  const handleClosePopup = () => {
+    popupsContext!.closeAllPopups();
+    setTaskName('');
+    setDueDate('');
+  };
+
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     popupsContext!.handleTaskFormSubmit(taskName, dueDate);
@@ -32,7 +35,7 @@ const TaskPopup = ({ name }: Props) => {
     <PopupWithForm
       isOpen={popupsContext!.isTaskPopupOpen}
       name={name}
-      onClose={popupsContext!.closeAllPopups}
+      onClose={handleClosePopup}
       onSubmit={handleSubmit}
       title="Add Task"
       submitButtonText="Add Task">
