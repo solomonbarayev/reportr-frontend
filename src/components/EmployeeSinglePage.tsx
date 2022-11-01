@@ -4,7 +4,7 @@ import ProfileTasks from './ProfileTasks';
 import { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
-import { IEmployee, ISubordinate } from '../model/EmployeeData';
+import { IEmployee, ISubordinate } from '../interfaces/EmployeeData';
 import api from '../../src/utils/api';
 import { usePopups } from '../contexts/PopupsContext';
 import { useAuth } from '../contexts/AuthContext';

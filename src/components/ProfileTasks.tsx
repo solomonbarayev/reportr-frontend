@@ -1,5 +1,5 @@
 import React from 'react';
-import { IEmployee } from '../model/EmployeeData';
+import { IEmployee } from '../interfaces/EmployeeData';
 
 export default function ProfileTasks({ employee }: { employee?: IEmployee }) {
   return (

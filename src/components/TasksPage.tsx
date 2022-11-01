@@ -1,6 +1,6 @@
 import TaskPageItem from './TaskPageItem';
 import React from 'react';
-import { ITask } from '../model/TaskData';
+import { ITask } from '../interfaces/TaskData';
 import api from '../utils/api';
 import Loader from './Loader';
 

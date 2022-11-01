@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { IEmployee } from '../model/EmployeeData';
+import { IEmployee } from '../interfaces/EmployeeData';
 import { AiOutlineUser } from 'react-icons/ai';
 
 interface Props {

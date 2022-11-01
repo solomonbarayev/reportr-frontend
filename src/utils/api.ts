@@ -1,5 +1,5 @@
-import { IReportBody } from '../model/ReportData';
-import { ITaskBody } from '../model/TaskData';
+import { IReportBody } from '../interfaces/ReportData';
+import { ITaskBody } from '../interfaces/TaskData';
 
 export class Api {
   BASE_URL: string;

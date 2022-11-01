@@ -1,31 +1,61 @@
 import React from 'react';
 import { useFormValidity } from '../contexts/FormVallidityContext';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { IRegisterData } from '../interfaces/AuthData';
+import { ILoginData } from '../interfaces/AuthData';
 
 interface Props {
   name: string;
   children?: React.ReactNode;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  userData: { email: string; password: string };
+  userData: ILoginData | IRegisterData;
   title: string;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const AuthForm = ({
   children,
   name,
-  handleChange,
   userData,
   title,
-  handleSubmit,
-}: Props) => {
+  handleChange,
+}: // handleSubmit,
+Props) => {
+  const authContext = useAuth();
   const validityContext = useFormValidity();
+
+  const checkFormValidity = () => {
+    if (
+      //make sure all fields are filled
+      Object.values(userData).every((value) => value !== '') &&
+      //make sure all errors are empty
+      Object.values(validityContext!.errors).every((value) => value === '')
+    ) {
+      validityContext!.setIsFormValid(true);
+    } else {
+      validityContext!.setIsFormValid(false);
+    }
+  };
+
+  const handleAuthSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (name === 'signin') {
+      authContext!.handleSignIn(userData.email, userData.password);
+    } else {
+      authContext!.handleSignUp(userData as IRegisterData);
+    }
+  };
+
+  React.useEffect(() => {
+    checkFormValidity();
+  }, [userData]);
+
   return (
     <section className={`auth auth_type_${name}`}>
       <h2 className={`auth__title auth__title_type_${name}`}>{title}</h2>
       <form
         className={`auth__form auth__form_type_${name}`}
-        onSubmit={handleSubmit}>
+        onSubmit={handleAuthSubmit}>
         <div
           className={`auth__input-container auth__input-container_type_${name}`}>
           <label

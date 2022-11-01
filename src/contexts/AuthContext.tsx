@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { IEmployee } from '../model/EmployeeData';
-import { IRegisterData } from '../utils/auth';
+import { IEmployee } from '../interfaces/EmployeeData';
+import { IRegisterData } from '../interfaces/AuthData';
 import auth from '../utils/auth';
 import { usePopups } from './PopupsContext';
 

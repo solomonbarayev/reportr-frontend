@@ -1,5 +1,5 @@
 import React from 'react';
-import { ISubordinate } from '../model/EmployeeData';
+import { ISubordinate } from '../interfaces/EmployeeData';
 
 interface Props {
   subordinates: ISubordinate[];

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
-import { IEmployee } from '../model/EmployeeData';
-import { IReport } from '../model/ReportData';
+import { IEmployee } from '../interfaces/EmployeeData';
+import { IReport } from '../interfaces/ReportData';
 import { useAuth } from './AuthContext';
 import api from '../utils/api';
 

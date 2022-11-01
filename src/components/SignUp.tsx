@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IRegisterData } from '../../src/utils/auth';
+import { IRegisterData } from '../../src/interfaces/AuthData';
 import EmployeeCheckboxes from './EmployeeCheckboxes';
 import { useAuth } from '../contexts/AuthContext';
 import { useFormValidity } from '../contexts/FormVallidityContext';
@@ -54,35 +54,12 @@ const SignUp = () => {
     return userData.mySubordinates?.includes(id);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    authContext!.handleSignUp(userData);
-  };
-
-  const checkFormValidity = () => {
-    if (
-      //make sure all errors are empty
-      Object.values(validityContext!.errors).every((error) => error === '') &&
-      //make sure all fields are filled
-      Object.values(userData).every((value) => value !== '')
-    ) {
-      validityContext!.setIsFormValid(true);
-    } else {
-      validityContext!.setIsFormValid(false);
-    }
-  };
-
-  useEffect(() => {
-    checkFormValidity();
-  }, [userData]);
-
   return (
     <AuthForm
       name="signup"
       title="Sign up"
       userData={userData}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}>
+      handleChange={handleChange}>
       <div className="auth__input-container">
         <label htmlFor="name" className="auth__label">
           First Name

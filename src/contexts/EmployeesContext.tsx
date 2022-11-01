@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { IEmployee } from '../model/EmployeeData';
+import { IEmployee } from '../interfaces/EmployeeData';
 import api from '../utils/api';
 import { useAuth } from './AuthContext';
 

@@ -1,14 +1,4 @@
-export interface IRegisterData {
-  email: string;
-  password: string;
-  picture: string;
-  firstName: string;
-  lastName: string;
-  position: string;
-  isManager: boolean;
-  mySubordinates: string[];
-}
-
+import { IRegisterData } from '../interfaces/AuthData';
 export default class Auth {
   BASE_URL: string;
 

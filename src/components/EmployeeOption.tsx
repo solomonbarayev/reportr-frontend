@@ -1,5 +1,5 @@
 import React from 'react';
-import { IEmployee } from '../model/EmployeeData';
+import { IEmployee } from '../interfaces/EmployeeData';
 
 interface Props {
   handleEmployeeCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IReport } from '../model/ReportData';
+import { IReport } from '../interfaces/ReportData';
 import api from '../utils/api';
 import { BsTrash } from 'react-icons/bs';
 import Loader from './Loader';
