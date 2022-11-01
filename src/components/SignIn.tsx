@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useFormValidity } from '../contexts/FormVallidityContext';
+import AuthForm from './AuthForm';
 
 const SignIn = () => {
   const validityContext = useFormValidity();
@@ -22,10 +22,10 @@ const SignIn = () => {
 
   const checkFormValidity = () => {
     if (
-      validityContext!.errors.email === '' &&
-      validityContext!.errors.password === '' &&
-      userData.email !== '' &&
-      userData.password !== ''
+      //make sure all fields are filled
+      Object.values(userData).every((value) => value !== '') &&
+      //make sure all errors are empty
+      Object.values(validityContext!.errors).every((value) => value === '')
     ) {
       validityContext!.setIsFormValid(true);
     } else {
@@ -38,62 +38,13 @@ const SignIn = () => {
   }, [userData]);
 
   return (
-    <section className="signin">
-      <h2 className="signin__title">Sign In</h2>
-      <form onSubmit={handleSubmit} className="signin__form">
-        <div className="signin__input-container">
-          <label htmlFor="email" className="signin__label">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={userData.email}
-            onChange={handleChange}
-            className="signin__input"
-            placeholder="Enter your email"
-          />
-          {/* span for error message */}
-          {validityContext!.errors.email && (
-            <span className="signin__error">
-              {validityContext!.errors.email}
-            </span>
-          )}
-        </div>
-        <div className="signin__input-container">
-          <label htmlFor="password" className="signin__label">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            onChange={handleChange}
-            value={userData.password}
-            placeholder="Enter your password"
-            className="signin__input"
-          />
-          {validityContext!.errors.password && (
-            <span className="signin__error">
-              {validityContext!.errors.password}
-            </span>
-          )}
-        </div>
-        <button
-          disabled={!validityContext!.isFormValid}
-          type="submit"
-          className={`signin__btn ${
-            !validityContext!.isFormValid && 'signin__btn_disabled'
-          }`}>
-          Sign In
-        </button>
-      </form>
-      {/* or sign in  */}
-      <Link to="/signup" className="signin__link">
-        Or Register
-      </Link>
-    </section>
+    <AuthForm
+      name="signin"
+      title="Sign In"
+      handleChange={handleChange}
+      userData={userData}
+      handleSubmit={handleSubmit}
+    />
   );
 };
 

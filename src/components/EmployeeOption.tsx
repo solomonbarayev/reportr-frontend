@@ -22,8 +22,8 @@ const EmployeeOption = ({
 
   return (
     <li
-      className={`signup__employee-list-item ${
-        employee.managerId ? 'signup__employee-list-item_deactivated' : null
+      className={`auth__employee-list-item ${
+        employee.managerId ? 'auth__employee-list-item_deactivated' : null
       }`}>
       <input
         type="checkbox"

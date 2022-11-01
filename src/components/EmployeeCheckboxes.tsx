@@ -15,7 +15,7 @@ const EmployeeCheckboxes = ({
 
   return (
     <>
-      <ul className="signup__employees-list">
+      <ul className="auth__employees-list">
         {employees.map((employee) => (
           <EmployeeOption
             employee={employee}
