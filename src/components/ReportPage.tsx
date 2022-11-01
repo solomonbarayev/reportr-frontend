@@ -10,7 +10,7 @@ const ReportPage = () => {
 
   React.useEffect(() => {
     api
-      .getCurrentUserReports(localStorage.getItem('jwt'))
+      .getCurrentUserReports()
       .then((res) => {
         if (res) {
           setReports(res);
@@ -26,7 +26,7 @@ const ReportPage = () => {
 
   const handleDeleteClick = (id: string) => {
     api
-      .deleteReport(localStorage.getItem('jwt'), id)
+      .deleteReport(id)
       .then((res) => {
         if (res) {
           setReports(reports.filter((report) => report._id !== id));

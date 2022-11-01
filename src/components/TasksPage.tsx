@@ -10,7 +10,7 @@ const TasksPage = () => {
 
   React.useEffect(() => {
     api
-      .getCurrentUserTasks(localStorage.getItem('jwt'))
+      .getCurrentUserTasks()
       .then((res) => {
         setTasks(res);
       })
@@ -24,7 +24,7 @@ const TasksPage = () => {
 
   const handleCompleteTask = (id: string) => {
     api
-      .completeTask(localStorage.getItem('jwt'), id)
+      .completeTask(id)
       .then((res) => {
         if (res) {
           setTasks(tasks.filter((task) => task._id !== id));
