@@ -20,6 +20,10 @@ interface IPopupContextState {
   setAssigningTaskToEmployee: React.Dispatch<
     React.SetStateAction<string | null>
   >;
+  isAuthStatusPopupOpen: boolean;
+  setIsAuthStatusPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  authStatus: string | null;
+  setAuthStatus: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 type PopupContextProviderProps = {
@@ -41,6 +45,9 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
   //popup states
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
   const [isReportPopupOpen, setIsReportPopupOpen] = useState(false);
+  const [isAuthStatusPopupOpen, setIsAuthStatusPopupOpen] = useState(false);
+
+  const [authStatus, setAuthStatus] = useState<string | null>('');
 
   const handleTaskPopupOpen = () => setIsTaskPopupOpen(true);
 
@@ -49,6 +56,7 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
   const closeAllPopups = () => {
     setIsTaskPopupOpen(false);
     setIsReportPopupOpen(false);
+    setIsAuthStatusPopupOpen(false);
   };
 
   const handleTaskFormSubmit = (taskName: string, dueDate: string) => {
@@ -74,7 +82,6 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
   };
 
   const handleReportFormSubmit = (reportName: string, dueDate: string) => {
-    console.log(reportName, dueDate, reportingToManager);
     api
       .createReport(
         authContext!.token,
@@ -111,6 +118,10 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
         setReportingToManager,
         assigningTaskToEmployee,
         setAssigningTaskToEmployee,
+        isAuthStatusPopupOpen,
+        setIsAuthStatusPopupOpen,
+        authStatus,
+        setAuthStatus,
       }}>
       {children}
     </PopupsContext.Provider>

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { IEmployee } from '../model/EmployeeData';
 import { IRegisterData } from '../utils/auth';
 import auth from '../utils/auth';
+import { usePopups } from './PopupsContext';
 
 interface IAuthContextState {
   isLoggedIn: boolean;
@@ -32,6 +33,8 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
 
   const history = useHistory();
 
+  const popupsContext = usePopups();
+
   const userAuth = new auth();
 
   useEffect(() => {
@@ -43,7 +46,6 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
             setIsLoggedIn(true);
             setUserData(res);
             history.push('/');
-            console.log(userData);
           }
         })
         .catch((err: any) => {
@@ -52,7 +54,6 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
         })
         .finally(() => {
           setIsCheckingToken(false);
-          console.log(isCheckingToken);
         });
     } else {
       setIsCheckingToken(false);
@@ -74,6 +75,8 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
       })
       .catch((err: any) => {
         console.log(err);
+        popupsContext?.setAuthStatus('error');
+        popupsContext?.setIsAuthStatusPopupOpen(true);
       })
       .finally(() => {
         setIsCheckingToken(false);
@@ -85,11 +88,18 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
       .register(data)
       .then((res: any) => {
         if (res) {
+          popupsContext!.setAuthStatus('success');
           history.push('/signin');
+        } else {
+          popupsContext!.setAuthStatus('error');
         }
       })
       .catch((err: any) => {
         console.log(err);
+        popupsContext!.setAuthStatus('error');
+      })
+      .finally(() => {
+        popupsContext!.setIsAuthStatusPopupOpen(true);
       });
   };
 

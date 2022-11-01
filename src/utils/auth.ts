@@ -13,8 +13,8 @@ export default class Auth {
   BASE_URL: string;
 
   constructor() {
-    // this.BASE_URL = 'http://localhost:3000';
-    this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
+    this.BASE_URL = 'http://localhost:3000';
+    // this.BASE_URL = 'https://api.reportr.solomonbarayev.dev';
   }
 
   private _customFetch(url: string, headers: Object) {

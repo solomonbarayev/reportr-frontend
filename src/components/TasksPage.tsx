@@ -45,7 +45,11 @@ const TasksPage = () => {
       {tasks.length > 0 ? (
         <ul className="tasks__list">
           {tasks.map((task) => (
-            <TaskPageItem task={task} handleCompleteTask={handleCompleteTask} />
+            <TaskPageItem
+              key={task._id}
+              task={task}
+              handleCompleteTask={handleCompleteTask}
+            />
           ))}
         </ul>
       ) : (

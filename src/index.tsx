@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import EmployeesProvider from './contexts/EmployeesContext';
 import AuthProvider from './contexts/AuthContext';
 import PopupsProvider from './contexts/PopupsContext';
+import FormValidityProvider from './contexts/FormVallidityContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,13 +14,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <PopupsProvider>
+      <PopupsProvider>
+        <AuthProvider>
           <EmployeesProvider>
-            <App />
+            <FormValidityProvider>
+              <App />
+            </FormValidityProvider>
           </EmployeesProvider>
-        </PopupsProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </PopupsProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

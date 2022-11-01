@@ -11,8 +11,11 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ReportPage from './components/ReportPage';
 import TaskPopup from './components/TaskPopup';
 import ReportPopup from './components/ReportPopup';
+import AuthStatusPopup from './components/AuthStatusPopup';
+import { usePopups } from './contexts/PopupsContext';
 
 const App: React.FC = () => {
+  const popupsContext = usePopups();
   return (
     <div className="App">
       <Header />
@@ -50,6 +53,7 @@ const App: React.FC = () => {
 
       <TaskPopup name="task-popup" />
       <ReportPopup name="report-popup" />
+      <AuthStatusPopup type={popupsContext!.authStatus} />
     </div>
   );
 };

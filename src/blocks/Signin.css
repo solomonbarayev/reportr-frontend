@@ -23,6 +23,21 @@
   margin-bottom: 5px;
 }
 
+.signin__input-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.signin__error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  position: absolute;
+  bottom: -5px;
+}
+
 .signin__input {
   padding: 12px;
   border: 1px solid rgb(185, 185, 185);
@@ -38,6 +53,11 @@
   background-color: rgb(8, 37, 164);
   color: white;
   cursor: pointer;
+}
+
+.signin__btn_disabled {
+  background-color: rgb(185, 185, 185);
+  cursor: not-allowed;
 }
 
 .signin__link {
