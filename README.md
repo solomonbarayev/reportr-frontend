@@ -36,10 +36,19 @@ The frontend is a Typescript React app that consumes the backend REST API. It us
   - if Manager: shows Employees List, Task Log, and Report Log
 
 - Employee Information page is dynamic based on whether the user is an employee or also a manager
+
   - if Employee: only shows Employee's info and tasks assigned to them
   - if Manager: shows the above as well as the subordinates of the employee
   - Report button is only enabled the employee is on their own profile page (their is also serverside validation in case postman is used to check this)
   - Assign Task button is only enabled if the employee (manager) is on their own profile page (their is also serverside validation in case postman is used to check this)
+
+- Signin and Signup form clientside validation
+
+  - In addition to the serverside validation, there is also clientside validation built in to the AuthForm component which is used for both the Signin and Signup forms. This validation is was built from scratch without the use of any libraries.
+  - In the event of successful registration, the user will see a popup informing them of successful registration and the user will be redirected to the Signin page for them to login.
+  - In the even of unsuccessful registration, the user will see a popup informing them of the error and the user can try to register again.
+  - In the event of successful login, the user will be redirected to the Employees List page.
+  - In the event of unsuccessful login, the user will see a popup informing them of the error and the user can try to login again.
 
 ## Deployed Fullstack App URL (GCP)
 
