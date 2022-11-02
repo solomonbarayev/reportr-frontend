@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IRegisterData } from '../../src/interfaces/AuthData';
 import EmployeeCheckboxes from './EmployeeCheckboxes';
 import { useAuth } from '../contexts/AuthContext';

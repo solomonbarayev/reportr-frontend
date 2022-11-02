@@ -63,6 +63,7 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
     assigningTaskToEmployee &&
       api
         .assignTask(
+          authContext!.token,
           {
             title: taskName,
             dueDate,
@@ -83,6 +84,7 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
   const handleReportFormSubmit = (reportName: string, dueDate: string) => {
     api
       .createReport(
+        authContext!.token,
         {
           text: reportName,
           date: dueDate,

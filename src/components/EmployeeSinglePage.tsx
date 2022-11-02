@@ -36,7 +36,7 @@ const EmployeeSinglePage = () => {
   useEffect(() => {
     //api call to find specific employee
     api
-      .getEmployee(id)
+      .getEmployee(authContext!.token, id)
       .then((res) => {
         res && setEmployee(res.employeeInfo);
         res.managerialInfo &&

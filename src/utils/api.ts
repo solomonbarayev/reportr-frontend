@@ -1,3 +1,4 @@
+// import { useAuth } from '../contexts/AuthContext';
 import { IReportBody } from '../interfaces/ReportData';
 import { ITaskBody } from '../interfaces/TaskData';
 
@@ -24,61 +25,93 @@ export class Api {
     }).then(this._checkResponse);
   };
 
-  public getEmployee = (employeeID: string) => {
+  public getEmployee = (token: string | null, employeeID: string) => {
     return fetch(`${this.BASE_URL}/employees/${employeeID}`, {
       method: 'GET',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 
-  public getCurrentUserTasks = () => {
+  public getCurrentUserTasks = (token: string | null) => {
     return fetch(`${this.BASE_URL}/tasks/mytasks`, {
       method: 'GET',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 
-  public getCurrentUserReports = () => {
+  public getCurrentUserReports = (token: string | null) => {
     return fetch(`${this.BASE_URL}/reports/myreports`, {
       method: 'GET',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 
-  public createReport = (report: IReportBody, managerId: string | null) => {
+  public createReport = (
+    token: string | null,
+    report: IReportBody,
+    managerId: string | null
+  ) => {
     return fetch(`${this.BASE_URL}/reports/${managerId}`, {
       method: 'POST',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(report),
     }).then(this._checkResponse);
   };
 
-  public assignTask = (task: ITaskBody, employeeId: string) => {
+  public assignTask = (
+    token: string | null,
+    task: ITaskBody,
+    employeeId: string
+  ) => {
     return fetch(`${this.BASE_URL}/tasks/${employeeId}`, {
       method: 'POST',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(task),
     }).then(this._checkResponse);
   };
 
-  public deleteReport = (reportId: string) => {
+  public deleteReport = (token: string | null, reportId: string) => {
     return fetch(`${this.BASE_URL}/reports/${reportId}`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 
-  public deleteAllReportsForUser = () => {
+  public deleteAllReportsForUser = (token: string | null) => {
     return fetch(`${this.BASE_URL}/reports`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 
-  public completeTask = (taskId: string) => {
+  public completeTask = (token: string | null, taskId: string) => {
     return fetch(`${this.BASE_URL}/tasks/${taskId}`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._checkResponse);
   };
 }
@@ -89,7 +122,7 @@ const api = new Api(
   {
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    // Authorization: `Bearer ${localStorage.getItem('jwt')}`,
   }
 );
 
