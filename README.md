@@ -82,6 +82,8 @@ This project had a few challenges for me. First of all, I was challenged with le
 - Clone this repository
 - Run `npm install` to install all dependencies
 - Run `npm start` to start the server
+- to test api locally, enable localhost:3000 as baseUrl in the api.ts and the auth.ts files in the src/utils folder
+- to test api with deployed backend, enable deployed backend url as baseUrl (should already by done by default) in the api.ts and the auth.ts files in the src/utils folder
 
 ## Author
 
