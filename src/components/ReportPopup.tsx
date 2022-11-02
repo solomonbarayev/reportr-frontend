@@ -15,6 +15,8 @@ const ReportPopup = ({ name }: Props) => {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     popupsContext!.handleReportFormSubmit(reportText, reportDate);
+    setReportText('');
+    setReportDate('');
   };
 
   const handleClose = () => {

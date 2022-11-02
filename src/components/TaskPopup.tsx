@@ -29,6 +29,8 @@ const TaskPopup = ({ name }: Props) => {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     popupsContext!.handleTaskFormSubmit(taskName, dueDate);
+    setTaskName('');
+    setDueDate('');
   };
 
   return (
