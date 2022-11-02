@@ -4,12 +4,11 @@ import { IEmployee } from '../interfaces/EmployeeData';
 import { IRegisterData } from '../interfaces/AuthData';
 import auth from '../utils/auth';
 import { usePopups } from './PopupsContext';
+import { useToken } from './TokenContext';
 
 interface IAuthContextState {
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  token: string | null;
-  setToken: React.Dispatch<React.SetStateAction<string | null>>;
   userData: IEmployee;
   setUserData: React.Dispatch<React.SetStateAction<IEmployee>>;
   handleSignIn: (email: string, password: string) => void;
@@ -27,20 +26,21 @@ const AuthContext = createContext<IAuthContextState | null>(null);
 
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('jwt'));
+  // const [token, setToken] = useState(localStorage.getItem('jwt'));
   const [userData, setUserData] = useState<IEmployee>({} as IEmployee);
   const [isCheckingToken, setIsCheckingToken] = useState<boolean>(true);
 
   const history = useHistory();
 
   const popupsContext = usePopups();
+  const tokenContext = useToken();
 
   const userAuth = new auth();
 
   useEffect(() => {
-    if (token) {
+    if (tokenContext?.token) {
       userAuth
-        .checkToken(token)
+        .checkToken(tokenContext?.token)
         .then((res: IEmployee) => {
           if (res) {
             setIsLoggedIn(true);
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
       .then((res: any) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          setToken(res.token);
+          tokenContext!.setToken(res.token);
           setIsLoggedIn(true);
           setUserData(res.user);
           history.push('/');
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
     setUserData({} as IEmployee);
-    setToken('');
+    tokenContext!.setToken('');
     setIsLoggedIn(false);
     history.push('/signin');
   };
@@ -116,8 +116,6 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
       value={{
         isLoggedIn,
         setIsLoggedIn,
-        token,
-        setToken,
         userData,
         setUserData,
         handleSignIn,

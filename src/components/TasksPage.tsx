@@ -3,17 +3,17 @@ import React from 'react';
 import { ITask } from '../interfaces/TaskData';
 import api from '../utils/api';
 import Loader from './Loader';
-import { useAuth } from '../contexts/AuthContext';
+import { useToken } from '../contexts/TokenContext';
 
 const TasksPage = () => {
   const [tasks, setTasks] = React.useState<ITask[]>([] as ITask[]);
   const [isTasksLoading, setIsTasksLoading] = React.useState<boolean>(true);
 
-  const authContext = useAuth();
+  const tokenContext = useToken();
 
   React.useEffect(() => {
     api
-      .getCurrentUserTasks(authContext!.token)
+      .getCurrentUserTasks(tokenContext!.token)
       .then((res) => {
         setTasks(res);
       })
@@ -27,7 +27,7 @@ const TasksPage = () => {
 
   const handleCompleteTask = (id: string) => {
     api
-      .completeTask(authContext!.token, id)
+      .completeTask(tokenContext!.token, id)
       .then((res) => {
         if (res) {
           setTasks(tasks.filter((task) => task._id !== id));

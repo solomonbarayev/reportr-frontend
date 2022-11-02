@@ -8,10 +8,12 @@ import { IEmployee, ISubordinate } from '../interfaces/EmployeeData';
 import api from '../../src/utils/api';
 import { usePopups } from '../contexts/PopupsContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useToken } from '../contexts/TokenContext';
 import Loader from './Loader';
 
 const EmployeeSinglePage = () => {
   const authContext = useAuth();
+  const tokenContext = useToken();
 
   //param
   const { id } = useParams<{ id: string }>();
@@ -36,7 +38,7 @@ const EmployeeSinglePage = () => {
   useEffect(() => {
     //api call to find specific employee
     api
-      .getEmployee(authContext!.token, id)
+      .getEmployee(tokenContext!.token, id)
       .then((res) => {
         res && setEmployee(res.employeeInfo);
         res.managerialInfo &&

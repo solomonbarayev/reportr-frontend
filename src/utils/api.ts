@@ -117,8 +117,8 @@ export class Api {
 }
 
 const api = new Api(
-  // 'http://localhost:3000',
-  'https://api.reportr.solomonbarayev.dev',
+  'http://localhost:3000',
+  // 'https://api.reportr.solomonbarayev.dev',
   {
     'Content-Type': 'application/json',
     Accept: 'application/json',

@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import { IEmployee } from '../interfaces/EmployeeData';
 import { IReport } from '../interfaces/ReportData';
 import { useAuth } from './AuthContext';
+import { useToken } from './TokenContext';
 import api from '../utils/api';
 
 interface IPopupContextState {
@@ -34,6 +35,7 @@ const PopupsContext = createContext<IPopupContextState | null>(null);
 
 export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
   const authContext = useAuth();
+  const tokenContext = useToken();
 
   const [reportingToManager, setReportingToManager] = useState<string | null>(
     ''
@@ -63,7 +65,7 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
     assigningTaskToEmployee &&
       api
         .assignTask(
-          authContext!.token,
+          tokenContext!.token,
           {
             title: taskName,
             dueDate,
@@ -82,9 +84,10 @@ export const PopupsProvider = ({ children }: PopupContextProviderProps) => {
   };
 
   const handleReportFormSubmit = (reportName: string, dueDate: string) => {
+    console.log(authContext);
     api
       .createReport(
-        authContext!.token,
+        tokenContext!.token,
         {
           text: reportName,
           date: dueDate,

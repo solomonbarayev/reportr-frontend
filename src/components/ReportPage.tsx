@@ -3,17 +3,17 @@ import { IReport } from '../interfaces/ReportData';
 import api from '../utils/api';
 import { BsTrash } from 'react-icons/bs';
 import Loader from './Loader';
-import { useAuth } from '../contexts/AuthContext';
+import { useToken } from '../contexts/TokenContext';
 
 const ReportPage = () => {
   const [reports, setReports] = React.useState<IReport[]>([] as IReport[]);
   const [isReportsLoading, setIsReportsLoading] = React.useState<boolean>(true);
 
-  const authContext = useAuth();
+  const tokenContext = useToken();
 
   React.useEffect(() => {
     api
-      .getCurrentUserReports(authContext!.token)
+      .getCurrentUserReports(tokenContext!.token)
       .then((res) => {
         if (res) {
           setReports(res);
@@ -29,7 +29,7 @@ const ReportPage = () => {
 
   const handleDeleteClick = (id: string) => {
     api
-      .deleteReport(authContext!.token, id)
+      .deleteReport(tokenContext!.token, id)
       .then((res) => {
         if (res) {
           setReports(reports.filter((report) => report._id !== id));

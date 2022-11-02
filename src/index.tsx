@@ -7,6 +7,7 @@ import EmployeesProvider from './contexts/EmployeesContext';
 import AuthProvider from './contexts/AuthContext';
 import PopupsProvider from './contexts/PopupsContext';
 import FormValidityProvider from './contexts/FormVallidityContext';
+import TokenProvider from './contexts/TokenContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,15 +15,17 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <PopupsProvider>
-        <AuthProvider>
-          <EmployeesProvider>
-            <FormValidityProvider>
-              <App />
-            </FormValidityProvider>
-          </EmployeesProvider>
-        </AuthProvider>
-      </PopupsProvider>
+      <TokenProvider>
+        <PopupsProvider>
+          <AuthProvider>
+            <EmployeesProvider>
+              <FormValidityProvider>
+                <App />
+              </FormValidityProvider>
+            </EmployeesProvider>
+          </AuthProvider>
+        </PopupsProvider>
+      </TokenProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
